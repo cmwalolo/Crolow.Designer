@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.6.11822.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Core", "Crolow.Designer.Core\Crolow.Designer.Core.csproj", "{007EFB58-F56D-39E9-876F-23E64146A135}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Core.Extended", "Crolow.Designer.Extended\Crolow.Designer.Core.Extended.csproj", "{C5E5425A-6D59-14C5-B27D-95BB826F6ACD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{007EFB58-F56D-39E9-876F-23E64146A135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{007EFB58-F56D-39E9-876F-23E64146A135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{007EFB58-F56D-39E9-876F-23E64146A135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{007EFB58-F56D-39E9-876F-23E64146A135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E5425A-6D59-14C5-B27D-95BB826F6ACD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E5425A-6D59-14C5-B27D-95BB826F6ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E5425A-6D59-14C5-B27D-95BB826F6ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E5425A-6D59-14C5-B27D-95BB826F6ACD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {193A9158-6FD2-48A0-9B89-5D954B3EFBC9}
+	EndGlobalSection
+EndGlobal
