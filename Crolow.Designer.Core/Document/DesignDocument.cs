@@ -1,3 +1,5 @@
+using Crolow.Designer.Core.Assets;
+
 namespace Crolow.Designer.Core.Document;
 
 public sealed class DesignDocument

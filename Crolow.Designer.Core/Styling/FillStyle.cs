@@ -1,3 +1,5 @@
+using Crolow.Designer.Core.Styling.Brushes;
+
 namespace Crolow.Designer.Core.Styling;
 
 public sealed class FillStyle

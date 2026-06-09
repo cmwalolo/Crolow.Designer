@@ -1,4 +1,5 @@
-using Crolow.Designer.Core.Effects;
+using Crolow.Designer.Core.Styling.Effects;
+using Crolow.Designer.Core.Styling.Strokes;
 
 namespace Crolow.Designer.Core.Styling;
 

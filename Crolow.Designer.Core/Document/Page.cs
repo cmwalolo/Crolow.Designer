@@ -1,5 +1,3 @@
-using Crolow.Designer.Core.Scene;
-
 namespace Crolow.Designer.Core.Document;
 
 public sealed class Page
@@ -12,5 +10,5 @@ public sealed class Page
 
     public double Height { get; set; }
 
-    public List<SceneNode> Children { get; set; } = [];
+    public List<Layer> Layers { get; set; } = [];
 }
