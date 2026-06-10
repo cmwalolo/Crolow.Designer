@@ -1,14 +1,18 @@
-using Crolow.Designer.Core.Assets;
+using Crolow.Designer.Abstractions;
 
 namespace Crolow.Designer.Core.Document;
 
-public sealed class DesignDocument
+public sealed class DesignDocument : ISelectionOwner<Layer>
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
     public string Name { get; set; } = "";
 
-    public List<Page> Pages { get; set; } = [];
+    public double Width { get; set; }
 
-    public AssetLibrary Assets { get; set; } = new();
+    public double Height { get; set; }
+
+    public List<Layer> Layers { get; set; } = [];
+    public SelectionState<Layer> Selection { get; } = new SelectionState<Layer>();
+
 }

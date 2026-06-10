@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wpf", "Wpf", "{B2EFA226-055
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Wpf.App", "Crolow.Designer.Wpf.App\Crolow.Designer.Wpf.App.csproj", "{890654AD-E24E-4605-989F-2E8080C4CFC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Runtime", "Crolow.Designer.Infrastructure\Crolow.Designer.Runtime.csproj", "{36DD9399-E9C6-44AF-963B-5D85BD9A29C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Abstractions", "Crolow.Designer.Abstractions\Crolow.Designer.Abstractions.csproj", "{FDC5CB1B-4BE3-4603-8083-40305C49C880}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{890654AD-E24E-4605-989F-2E8080C4CFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{890654AD-E24E-4605-989F-2E8080C4CFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{890654AD-E24E-4605-989F-2E8080C4CFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DD9399-E9C6-44AF-963B-5D85BD9A29C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DD9399-E9C6-44AF-963B-5D85BD9A29C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DD9399-E9C6-44AF-963B-5D85BD9A29C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DD9399-E9C6-44AF-963B-5D85BD9A29C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDC5CB1B-4BE3-4603-8083-40305C49C880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDC5CB1B-4BE3-4603-8083-40305C49C880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDC5CB1B-4BE3-4603-8083-40305C49C880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDC5CB1B-4BE3-4603-8083-40305C49C880}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +51,8 @@ Global
 		{007EFB58-F56D-39E9-876F-23E64146A135} = {9B59A4F3-8B4B-4A9B-8013-68657BB165EF}
 		{C5E5425A-6D59-14C5-B27D-95BB826F6ACD} = {9B59A4F3-8B4B-4A9B-8013-68657BB165EF}
 		{890654AD-E24E-4605-989F-2E8080C4CFC6} = {B2EFA226-055B-46C6-84CD-EFDF6859FB0F}
+		{36DD9399-E9C6-44AF-963B-5D85BD9A29C5} = {9B59A4F3-8B4B-4A9B-8013-68657BB165EF}
+		{FDC5CB1B-4BE3-4603-8083-40305C49C880} = {9B59A4F3-8B4B-4A9B-8013-68657BB165EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {193A9158-6FD2-48A0-9B89-5D954B3EFBC9}
