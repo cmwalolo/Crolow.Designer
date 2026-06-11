@@ -129,7 +129,7 @@
 
                     <Fluent:Button Header="Mind Map" />
 
-                    <Fluent:Button Header="Page" />
+                    <Fluent:Button Header="★ Page" />
 
                 </Fluent:RibbonGroupBox>
 

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Runtime", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Abstractions", "Crolow.Designer.Abstractions\Crolow.Designer.Abstractions.csproj", "{FDC5CB1B-4BE3-4603-8083-40305C49C880}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Console.App", "Crolow.Designer.Console.App\Crolow.Designer.Console.App.csproj", "{1A98E7DD-2BB9-4F5E-AF1F-09D7B59C2CE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{FDC5CB1B-4BE3-4603-8083-40305C49C880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDC5CB1B-4BE3-4603-8083-40305C49C880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDC5CB1B-4BE3-4603-8083-40305C49C880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A98E7DD-2BB9-4F5E-AF1F-09D7B59C2CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A98E7DD-2BB9-4F5E-AF1F-09D7B59C2CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A98E7DD-2BB9-4F5E-AF1F-09D7B59C2CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A98E7DD-2BB9-4F5E-AF1F-09D7B59C2CE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{890654AD-E24E-4605-989F-2E8080C4CFC6} = {B2EFA226-055B-46C6-84CD-EFDF6859FB0F}
 		{36DD9399-E9C6-44AF-963B-5D85BD9A29C5} = {9B59A4F3-8B4B-4A9B-8013-68657BB165EF}
 		{FDC5CB1B-4BE3-4603-8083-40305C49C880} = {9B59A4F3-8B4B-4A9B-8013-68657BB165EF}
+		{1A98E7DD-2BB9-4F5E-AF1F-09D7B59C2CE1} = {B2EFA226-055B-46C6-84CD-EFDF6859FB0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {193A9158-6FD2-48A0-9B89-5D954B3EFBC9}

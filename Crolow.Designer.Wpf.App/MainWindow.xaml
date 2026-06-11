@@ -19,8 +19,8 @@
             <MenuItem Header="_View"/>
         </Menu>
 
-        <views:MainPageRibbon DockPanel.Dock="Top"/>    
-        <ad:DockingManager>
+        <views:MainPageRibbon DockPanel.Dock="Top"/>
+        <ad:DockingManager x:Name="dockManager">
             <ad:DockingManager.Layout>
                 <layout:LayoutRoot xmlns="http://schemas.datacontract.org/2004/07/AvalonDock.Layout">
 

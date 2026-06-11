@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" Version="4.74.1" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.Arc" Version="4.74.1" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.74.1" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
     <PackageReference Include="SkiaSharp" Version="3.119.4" />
     <PackageReference Include="SkiaSharp.Views.WPF" Version="3.119.4" />
