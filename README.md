@@ -6,6 +6,7 @@ I have no idea where it goes, and no idea of the final purpose
 - Styling : Will be more like a styles library where you can apply style to each object. And ensure you keep your project within  unified visuals
 - Filters : There will be filters on bitmaps brushs
 - It should blend and use antialiasing optimally
+- It should use AI to create scenes
 
 And i don't know what more.
 
