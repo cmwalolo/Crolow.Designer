@@ -4,7 +4,7 @@ I have no idea where it goes, and no idea of the final purpose
 - It could integrate videos with animations of objects.
 - Scriptable where you can inject variables into objects : Mainly Text
 - Styling : Will be more like a styles library where you can apply style to each object. And ensure you keep your project within  unified visuals
-- Filters : There will be filters on bitmaps brushs
+- Filters : There will be filters on bitmap or rendered objects (not the same as styling)
 - It should blend and use antialiasing optimally
 - It should use AI to create scenes
 
