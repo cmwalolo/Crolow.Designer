@@ -8,17 +8,11 @@
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         xmlns:layout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
         xmlns:Fluent="urn:fluent-ribbon"
+        xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <DockPanel>
-       
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File"/>
-            <MenuItem Header="_Edit"/>
-            <MenuItem Header="_View"/>
-        </Menu>
-
         <views:MainPageRibbon DockPanel.Dock="Top"/>
         <ad:DockingManager x:Name="dockManager">
             <ad:DockingManager.Layout>
@@ -31,7 +25,7 @@
                         </layout:LayoutAnchorablePane>
 
                         <layout:LayoutDocumentPane>
-                            <layout:LayoutDocument Title="Document"/>
+                            <!--<layout:LayoutDocument Title="Document"/>-->
                         </layout:LayoutDocumentPane>
                         <!-- Right pane -->
                         <layout:LayoutAnchorablePane DockWidth="300">

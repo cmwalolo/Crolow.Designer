@@ -14,7 +14,7 @@ namespace Crolow.Designer.Wpf.App
 
             ThemeManager.Current.ChangeTheme(
                 System.Windows.Application.Current,
-                "Dark.Cobalt");
+                "Dark.Red");
         }
     }
 }

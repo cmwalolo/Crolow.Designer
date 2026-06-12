@@ -9,13 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Svg\Documents\document-duplicate.svg" />
+    <None Remove="Resources\Svg\Documents\document-open.svg" />
+    <None Remove="Resources\Svg\Documents\document-save-all.svg" />
+    <None Remove="Resources\Svg\Documents\document-save.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" Version="4.74.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.Arc" Version="4.74.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.74.1" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
+    <PackageReference Include="SharpVectors" Version="1.8.5" />
     <PackageReference Include="SkiaSharp" Version="3.119.4" />
     <PackageReference Include="SkiaSharp.Views.WPF" Version="3.119.4" />
     <PackageReference Include="Svg.Skia" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Svg\Documents\document-duplicate.svg" />
+    <Resource Include="Resources\Svg\Documents\document-open.svg" />
+    <Resource Include="Resources\Svg\Documents\document-save-all.svg" />
+    <Resource Include="Resources\Svg\Documents\document-save.svg" />
   </ItemGroup>
 
 </Project>
