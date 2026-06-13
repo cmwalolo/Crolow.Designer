@@ -11,8 +11,4 @@
     <ProjectReference Include="..\Crolow.Designer.Core\Crolow.Designer.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\ApplicationEvents\" />
-  </ItemGroup>
-
 </Project>

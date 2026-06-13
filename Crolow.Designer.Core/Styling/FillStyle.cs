@@ -2,7 +2,7 @@ using Crolow.Designer.Core.Styling.Brushes;
 
 namespace Crolow.Designer.Core.Styling;
 
-public sealed class FillStyle
+public class FillStyle
 {
     public bool Enabled { get; set; } = true;
 

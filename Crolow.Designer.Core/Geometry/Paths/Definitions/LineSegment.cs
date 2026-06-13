@@ -1,5 +1,5 @@
 namespace Crolow.Designer.Core.Geometry.Paths.Definitions;
 
-public sealed class LineSegment : PathSegment
+public class LineSegment : PathSegment
 {
 }

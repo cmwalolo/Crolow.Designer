@@ -2,7 +2,7 @@ using Crolow.Designer.Core.Colors;
 
 namespace Crolow.Designer.Core.Styling.Brushes.Definitions;
 
-public sealed class GradientStop
+public class GradientStop
 {
     public double Offset { get; set; }
 

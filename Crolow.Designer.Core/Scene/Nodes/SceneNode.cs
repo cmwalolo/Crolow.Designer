@@ -1,10 +1,11 @@
+using Crolow.Designer.Core.Document;
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Styling;
 using Crolow.Designer.Core.Transforms;
 
 namespace Crolow.Designer.Core.Scene.Nodes;
 
-public abstract class SceneNode
+public abstract class SceneNode : IDataObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 

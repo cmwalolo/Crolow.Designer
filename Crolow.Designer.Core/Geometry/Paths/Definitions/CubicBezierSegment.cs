@@ -1,6 +1,6 @@
 namespace Crolow.Designer.Core.Geometry.Paths.Definitions;
 
-public sealed class CubicBezierSegment : PathSegment
+public class CubicBezierSegment : PathSegment
 {
     public Point2D Control1 { get; set; }
 

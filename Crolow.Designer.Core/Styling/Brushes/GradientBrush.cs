@@ -3,7 +3,7 @@ using Crolow.Designer.Core.Styling.Brushes.Definitions;
 
 namespace Crolow.Designer.Core.Styling.Brushes;
 
-public sealed class GradientBrush : Brush
+public class GradientBrush : Brush
 {
     public GradientType Type { get; set; }
 

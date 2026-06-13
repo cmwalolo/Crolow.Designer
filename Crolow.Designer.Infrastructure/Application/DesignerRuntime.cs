@@ -1,8 +1,7 @@
-﻿using Crolow.Designer.Core.Document;
-using Crolow.Designer.Runtime.Commands;
+﻿using Crolow.Designer.Runtime.Application.Commands;
 using Crolow.Designer.Runtime.Events;
 
-namespace Crolow.Designer;
+namespace Crolow.Designer.Runtime.Application;
 #region Commands
 
 #endregion
@@ -10,8 +9,7 @@ namespace Crolow.Designer;
 
 public sealed class DesignerRuntime
 {
-    public List<DesignDocument> Documents { get; }
-        = [];
+    public DocumentSessionManager Documents { get; } = new();
 
     public EventBus Events { get; }
         = new();

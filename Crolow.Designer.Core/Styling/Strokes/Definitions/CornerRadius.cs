@@ -1,6 +1,6 @@
 namespace Crolow.Designer.Core.Styling.Strokes.Definitions;
 
-public sealed class CornerRadius
+public class CornerRadius
 {
     public double TopLeft { get; set; }
 

@@ -1,84 +1,52 @@
 ﻿#region Demo
 
-using Crolow.Designer;
-using Crolow.Designer.Core.Document;
-using Crolow.Designer.Core.Scene.Nodes;
-using Crolow.Designer.Runtime.Application.Commands;
-using Crolow.Designer.Runtime.Application.Commands.Requests;
-using Crolow.Designer.Runtime.Application.Events;
+using Crolow.Designer.Runtime.Application;
+using Crolow.Designer.Runtime.Modules.DocumentModule;
+using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Requests;
 
 public static class Program
 {
     public static async Task Main()
     {
-        var runtime =
-            new DesignerRuntime();
+        var runtime = new DesignerRuntime();
 
-        runtime.Commands.Register(
-            new CreateDocumentCommandHandler(runtime));
-
-        runtime.Commands.Register(
-            new CreateLayerCommandHandler(runtime));
-
-        runtime.Commands.Register(
-            new CreateRectangleCommandHandler(runtime));
-
-        runtime.Commands.Register(
-            new SelectCommandHandler<Layer>(runtime));
-
-        runtime.Commands.Register(
-            new SelectCommandHandler<SceneNode>(runtime));
-
-        runtime.Commands.Register(
-            new ClearSelectionCommandHandler<Layer>(runtime));
-
-        runtime.Commands.Register(
-            new ClearSelectionCommandHandler<SceneNode>(runtime));
-
-        runtime.Events.Subscribe<
-                LayerCreatedEvent>(
-                evt =>
-                {
-                    Console.WriteLine(
-                        $"Layer Created => {evt.Layer.Name}");
-
-                    return Task.CompletedTask;
-                });
-
+        var documentSessionManager = runtime.Documents;
         var document =
-            await runtime.Commands.ExecuteAsync(
-                new CreateDocumentCommand(
-                    "Landing Page"));
+             await runtime.Commands.ExecuteAsync(new CreateDocumentCommand(documentSessionManager));
+        var documentSession = new DocumentSession { Document = document.Result };
+        documentSessionManager.Documents.Add(documentSession);
 
-        var layer =
-            await runtime.Commands.ExecuteAsync(
+        var layer = await runtime.Commands.ExecuteAsync(
+                new CreateLayerCommand(document.Result));
+
+        await runtime.Commands.ExecuteAsync(
+            new CreateRectangleCommand(
+                layer.Result));
+
+        await runtime.Commands.ExecuteAsync(
+            new CreateRectangleCommand(
+                layer.Result));
+
+        var layer2 = await runtime.Commands.ExecuteAsync(
                 new CreateLayerCommand(
-                    document,
-                    "Desktop"));
+                    document.Result));
 
-        var hero =
-            await runtime.Commands.ExecuteAsync(
-                new CreateRectangleCommand(
-                    layer,
-                    "Hero Banner"));
+        await runtime.Commands.ExecuteAsync(
+            new CreateRectangleCommand(
+                layer2.Result));
+        await runtime.Commands.ExecuteAsync(
+            new CreateRectangleCommand(
+                layer2.Result));
 
-        var selectedLayers =
-            await runtime.Commands.ExecuteAsync(
-                new SelectCommand<Layer>(
-                    document,
-                    layer));
 
-        var selectedObjects =
-            await runtime.Commands.ExecuteAsync(
-                new SelectCommand<SceneNode>(
-                    layer,
-                    hero));
+        var layers = document.Result.Layers.Count();
+        var objects = document.Result.Layers.SelectMany(x => x.Children).Count();
 
         Console.WriteLine(
-            $"Selected Layers : {selectedLayers.Items.Count}");
-
+            $"# Layers : {layers}");
         Console.WriteLine(
-            $"Selected Objects : {selectedObjects.Items.Count}");
+            $"# Objects : {objects}");
+
     }
 }
 #endregion

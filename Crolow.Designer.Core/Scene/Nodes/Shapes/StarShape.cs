@@ -1,6 +1,6 @@
 namespace Crolow.Designer.Core.Scene.Nodes.Objects;
 
-public sealed class StarShape : SceneNode
+public class StarShape : SceneNode
 {
     public int Points { get; set; }
 

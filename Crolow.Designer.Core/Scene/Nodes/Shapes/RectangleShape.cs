@@ -2,7 +2,7 @@ using Crolow.Designer.Core.Styling.Strokes.Definitions;
 
 namespace Crolow.Designer.Core.Scene.Nodes.Objects;
 
-public sealed class RectangleShape : SceneNode
+public class RectangleShape : SceneNode
 {
     public double Width { get; set; }
 

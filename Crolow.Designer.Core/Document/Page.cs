@@ -1,6 +1,8 @@
+using Crolow.Designer.Core.Scene.Nodes;
+
 namespace Crolow.Designer.Core.Document;
 
-public sealed class Page
+public class Page : IDataObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
@@ -10,5 +12,5 @@ public sealed class Page
 
     public double Height { get; set; }
 
-    public List<Layer> Layers { get; set; } = [];
+    public List<LayerNode> Layers { get; set; } = [];
 }

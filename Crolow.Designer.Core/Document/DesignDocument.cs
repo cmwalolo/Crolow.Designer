@@ -1,8 +1,8 @@
-using Crolow.Designer.Abstractions;
+using Crolow.Designer.Core.Scene.Nodes;
 
 namespace Crolow.Designer.Core.Document;
 
-public sealed class DesignDocument : ISelectionOwner<Layer>
+public class DesignDocument : IDataObject
 {
     public Guid Id { get; set; } = Guid.NewGuid();
 
@@ -12,7 +12,6 @@ public sealed class DesignDocument : ISelectionOwner<Layer>
 
     public double Height { get; set; }
 
-    public List<Layer> Layers { get; set; } = [];
-    public SelectionState<Layer> Selection { get; } = new SelectionState<Layer>();
+    public List<LayerNode> Layers { get; set; } = [];
 
 }

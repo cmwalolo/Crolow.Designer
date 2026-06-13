@@ -3,7 +3,7 @@ using Crolow.Designer.Core.Styling.Strokes;
 
 namespace Crolow.Designer.Core.Styling;
 
-public sealed class Appearance
+public class Appearance
 {
     public List<FillStyle> Fills { get; set; } = [];
 
