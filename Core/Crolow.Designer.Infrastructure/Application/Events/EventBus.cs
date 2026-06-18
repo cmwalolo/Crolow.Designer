@@ -6,20 +6,52 @@ public sealed class EventBus
 {
     private readonly ConcurrentDictionary<Type, List<EventBusSubscription>> _handlers = new();
 
-    public void Subscribe<TEvent>(Guid targetId, Func<TEvent, Task> handler)
-            where TEvent : IEvent
+    public IDisposable Subscribe<TEvent>(
+        Guid targetId,
+        Func<TEvent, Task> handler)
+        where TEvent : IEvent
     {
         var list = _handlers.GetOrAdd(typeof(TEvent), _ => new List<EventBusSubscription>());
-        list.Add(new EventBusSubscription(targetId, evt => handler((TEvent)evt)));
+
+        var subscription = new EventBusSubscription(
+            this,
+            typeof(TEvent),
+            targetId,
+            evt => handler((TEvent)evt));
+
+        lock (list)
+        {
+            list.Add(subscription);
+        }
+
+        return subscription;
+    }
+
+    internal void Unsubscribe(EventBusSubscription subscription)
+    {
+        if (_handlers.TryGetValue(subscription.EventType, out var list))
+        {
+            lock (list)
+            {
+                list.Remove(subscription);
+            }
+        }
     }
 
     public async Task PublishAsync<TEvent>(Guid targetId, TEvent evt)
-            where TEvent : IEvent
+        where TEvent : IEvent
     {
         if (!_handlers.TryGetValue(typeof(TEvent), out var handlers))
             return;
 
-        foreach (var subscription in handlers)
+        EventBusSubscription[] subscriptions;
+
+        lock (handlers)
+        {
+            subscriptions = handlers.ToArray();
+        }
+
+        foreach (var subscription in subscriptions)
         {
             if (subscription.Id == targetId)
             {
