@@ -1,0 +1,19 @@
+﻿using Crolow.Designer.UI;
+using System.Windows;
+
+namespace Crolow.Designer.Wpf.App
+{
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
+    {
+        App()
+        {
+            var r = new RuntimeController();
+            var p = new DocumentsController(r);
+
+        }
+    }
+
+}

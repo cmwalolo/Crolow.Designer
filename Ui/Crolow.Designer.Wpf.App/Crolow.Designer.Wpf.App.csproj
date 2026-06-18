@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Svg\Documents\doc-close.svg" />
+    <None Remove="Resources\Svg\Documents\doc-new.svg" />
+    <None Remove="Resources\Svg\Documents\doc-open.svg" />
+    <None Remove="Resources\Svg\Documents\doc-save-as.svg" />
+    <None Remove="Resources\Svg\Documents\doc-save.svg" />
+    <None Remove="Resources\Svg\Documents\document-duplicate.svg" />
+    <None Remove="Resources\Svg\Documents\document-open.svg" />
+    <None Remove="Resources\Svg\Documents\document-save-all.svg" />
+    <None Remove="Resources\Svg\Documents\document-save.svg" />
+    <None Remove="Resources\Svg\Documents\draw-crop.svg" />
+    <None Remove="Resources\Svg\Documents\draw-fill.svg" />
+    <None Remove="Resources\Svg\Documents\draw-filter.svg" />
+    <None Remove="Resources\Svg\Documents\draw-stroke.svg" />
+    <None Remove="Resources\Svg\Documents\object-copy.svg" />
+    <None Remove="Resources\Svg\Documents\object-cut.svg" />
+    <None Remove="Resources\Svg\Documents\object-delete.svg" />
+    <None Remove="Resources\Svg\Documents\object-duplicate.svg" />
+    <None Remove="Resources\Svg\Documents\object-edit.svg" />
+    <None Remove="Resources\Svg\Documents\object-paste.svg" />
+    <None Remove="Resources\Svg\Documents\object-redo.svg" />
+    <None Remove="Resources\Svg\Documents\object-undo.svg" />
+    <None Remove="Resources\Svg\Documents\shape-circle-new.svg" />
+    <None Remove="Resources\Svg\Documents\shape-polygon.svg" />
+    <None Remove="Resources\Svg\Documents\shape-rectangle-new.svg" />
+    <None Remove="Resources\Svg\Documents\shape-shapes.svg" />
+    <None Remove="Resources\Svg\Documents\ui-select-free.svg" />
+    <None Remove="Resources\Svg\Documents\ui-select-retangle.svg" />
+    <None Remove="Resources\Svg\Documents\ui-select-wend.svg" />
+    <None Remove="Resources\Svg\Documents\view-fit.svg" />
+    <None Remove="Resources\Svg\Documents\view-real-size.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Svg\Documents\object-redo.svg" />
+    <Resource Include="Resources\Svg\Documents\object-undo.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dirkster.AvalonDock" Version="4.74.1" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.Arc" Version="4.74.1" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.74.1" />
+    <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
+    <PackageReference Include="SharpVectors" Version="1.8.5" />
+    <PackageReference Include="SkiaSharp" Version="3.119.4" />
+    <PackageReference Include="SkiaSharp.Views.WPF" Version="3.119.4" />
+    <PackageReference Include="Svg.Skia" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Crolow.Designer.UI\Crolow.Designer.UI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Svg\Documents\doc-close.svg" />
+    <Resource Include="Resources\Svg\Documents\doc-new.svg" />
+    <Resource Include="Resources\Svg\Documents\doc-open.svg" />
+    <Resource Include="Resources\Svg\Documents\doc-save-as.svg" />
+    <Resource Include="Resources\Svg\Documents\doc-save.svg" />
+    <Resource Include="Resources\Svg\Documents\document-duplicate.svg" />
+    <Resource Include="Resources\Svg\Documents\document-open.svg" />
+    <Resource Include="Resources\Svg\Documents\document-save-all.svg" />
+    <Resource Include="Resources\Svg\Documents\document-save.svg" />
+    <Resource Include="Resources\Svg\Documents\draw-crop.svg" />
+    <Resource Include="Resources\Svg\Documents\draw-fill.svg" />
+    <Resource Include="Resources\Svg\Documents\draw-filter.svg" />
+    <Resource Include="Resources\Svg\Documents\draw-stroke.svg" />
+    <Resource Include="Resources\Svg\Documents\object-copy.svg" />
+    <Resource Include="Resources\Svg\Documents\object-cut.svg" />
+    <Resource Include="Resources\Svg\Documents\object-delete.svg" />
+    <Resource Include="Resources\Svg\Documents\object-duplicate.svg" />
+    <Resource Include="Resources\Svg\Documents\object-edit.svg" />
+    <Resource Include="Resources\Svg\Documents\object-paste.svg" />
+    <Resource Include="Resources\Svg\Documents\shape-circle-new.svg" />
+    <Resource Include="Resources\Svg\Documents\shape-polygon.svg" />
+    <Resource Include="Resources\Svg\Documents\shape-rectangle-new.svg" />
+    <Resource Include="Resources\Svg\Documents\shape-shapes.svg" />
+    <Resource Include="Resources\Svg\Documents\ui-select-free.svg" />
+    <Resource Include="Resources\Svg\Documents\ui-select-retangle.svg" />
+    <Resource Include="Resources\Svg\Documents\ui-select-wend.svg" />
+    <Resource Include="Resources\Svg\Documents\view-fit.svg" />
+    <Resource Include="Resources\Svg\Documents\view-real-size.svg" />
+    <Resource Include="Resources\Svg\Documents\view-zoom-in.svg" />
+    <Resource Include="Resources\Svg\Documents\view-zoom-out.svg" />
+  </ItemGroup>
+
+</Project>
