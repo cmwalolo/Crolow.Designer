@@ -3,7 +3,6 @@
 namespace Crolow.Designer.Common.Event;
 
 
-
 public interface IEvent
 {
     public Guid ReferenceId { get; }

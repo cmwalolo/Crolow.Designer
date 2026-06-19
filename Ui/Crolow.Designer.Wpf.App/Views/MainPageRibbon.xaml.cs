@@ -1,4 +1,6 @@
-﻿using Crolow.Designer.UI;
+﻿using Crolow.Designer.Core.Document;
+using Crolow.Designer.UI;
+using Crolow.Designer.Wpf.App.Views.Document;
 using System.Windows.Controls;
 
 namespace Crolow.Designer.Wpf.App.Views
@@ -15,7 +17,28 @@ namespace Crolow.Designer.Wpf.App.Views
 
         private void NewDocument_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            DocumentsController.Controller.NewDocument(new Core.Document.DesignDocument());
+
+            var doc = new DesignDocument();
+            var vm = new DesignDocumentDialogViewModel(doc);
+
+            var dialog = new DesignDocumentDialog
+            {
+                Owner = System.Windows.Application.Current.MainWindow,
+                DataContext = vm
+            };
+
+            vm.CloseAction = (x) =>
+            {
+                dialog.DialogResult = x;
+                dialog.Close();
+            };
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                DocumentsController.Controller.NewDocument(doc);
+            }
         }
     }
 }

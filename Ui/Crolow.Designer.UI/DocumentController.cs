@@ -8,12 +8,13 @@ namespace Crolow.Designer.UI
     {
         protected DesignerRuntime runtime;
         protected DocumentsController manager;
-        protected DocumentSession session;
+
+        public DocumentSession Session { get; set; }
         public SelectionRegistry Selections { get; set; } = new SelectionRegistry();
 
         public DocumentController(DocumentSession session)
         {
-            this.session = session;
+            this.Session = session;
         }
     }
 }

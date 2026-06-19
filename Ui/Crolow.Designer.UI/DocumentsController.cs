@@ -10,7 +10,6 @@ namespace Crolow.Designer.UI
     public class DocumentsController : IDisposable
     {
         public static DocumentsController Controller { get; set; }
-
         public DocumentController ActiveDocument { get; set; }
         public List<DocumentController> OpenDocuments { get; set; } = new List<DocumentController>();
         public RuntimeController RuntimeController { get; set; }
@@ -42,7 +41,7 @@ namespace Crolow.Designer.UI
                             ActiveDocument = new DocumentController(doc);
                             OpenDocuments.Add(ActiveDocument);
                         }
-                        await runtime.Events.PublishAsync(GuidSources.Documents.GenerateGuid(), new DocumentActivateEvent(this, ActiveDocument));
+                        await runtime.Events.PublishAsync(GuidSources.Documents.GenerateGuid(), new DocumentActivatedEvent(this, true, ActiveDocument));
                     }
 
                     break;

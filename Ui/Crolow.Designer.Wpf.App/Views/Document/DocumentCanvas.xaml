@@ -5,29 +5,32 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:local="clr-namespace:Crolow.Designer.Wpf.App.Views.Document"
             xmlns:Fluent="urn:fluent-ribbon" 
-            x:Class="Crolow.Designer.Wpf.App.Views.Document.DocumentTreeview"
+            x:Class="Crolow.Designer.Wpf.App.Views.Document.DocumentCanvas"
             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" 
             xmlns:listview="clr-namespace:Crolow.Designer.Wpf.App.Controls.Listview"
             mc:Ignorable="d" 
             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
-            <StackPanel  Orientation="Horizontal"
+            <StackPanel Orientation="Horizontal"
                     Margin="4,2">
+
                 <Button Width="28"
                     Height="28"
                     ToolTip="Edit"
                     Click="EditDocument_Click"
-                    Background="black"
-                    Foreground="white"
+                    Background="Transparent"
+                    BorderThickness="0"
                     Cursor="Hand">
-                    <Viewbox  Width="16" Height="16">
+
+                    <Viewbox Width="16" Height="16">
                         <svgc:SvgViewbox Source="/Resources/Svg/Documents/object-edit.svg"/>
                     </Viewbox>
+
                 </Button>
             </StackPanel>
         </Border>

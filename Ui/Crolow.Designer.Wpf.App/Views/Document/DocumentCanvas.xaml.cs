@@ -1,7 +1,4 @@
-﻿using Crolow.Designer.Common.Constants;
-using Crolow.Designer.Common.Extensions;
-using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
-using Crolow.Designer.UI;
+﻿using Crolow.Designer.UI;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,12 +7,14 @@ namespace Crolow.Designer.Wpf.App.Views.Document
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class DocumentTreeview : UserControl, IDisposable
+    public partial class DocumentCanvas : UserControl, IDisposable
     {
-        private IDisposable documentSubscription;
-        public DocumentTreeview()
+        private DocumentController documentController;
+        public DocumentCanvas(DocumentController documentController)
         {
             InitializeComponent();
+
+            this.documentController = documentController;
 
             //var document = new TreeNode { Text = "Document" };
             //var page1 = new TreeNode { Parent = document, Text = "Page 1" };
@@ -29,23 +28,9 @@ namespace Crolow.Designer.Wpf.App.Views.Document
             //document.Children.Add(page2);
 
             //DocumentTree.Nodes.Add(document);
-            //DocumentTree.Refresh();
-
-            documentSubscription = RuntimeController.Runtime.Events
-                        .Subscribe<DocumentActivatedEvent>(GuidSources.Documents.GenerateGuid(), OnActivateDocumentEvent);
+            DocumentTree.Refresh();
         }
 
-
-
-        private async Task OnActivateDocumentEvent(DocumentActivatedEvent doc)
-        {
-            switch (doc.EventAction)
-            {
-                case EventAction.ObjectActivated:
-                    DocumentTree.Clear();
-                    break;
-            }
-        }
 
         private void EditDocument_Click(object sender, RoutedEventArgs e)
         {
@@ -54,7 +39,6 @@ namespace Crolow.Designer.Wpf.App.Views.Document
 
         public void Dispose()
         {
-            documentSubscription?.Dispose();
         }
     }
 }

@@ -25,8 +25,9 @@
                             <layout:LayoutAnchorable Title="Toolbox"/>
                         </layout:LayoutAnchorablePane>
 
-                        <layout:LayoutDocumentPane>
-                            <!--<layout:LayoutDocument Title="Document"/>-->
+                        <layout:LayoutDocumentPane x:Name="DocumentPane">
+                            <!--<layout:LayoutDocument Title="Document"/>
+                            <layout:LayoutDocument Title="Document 2"/>-->
                         </layout:LayoutDocumentPane>
                         <!-- Right pane -->
                         <layout:LayoutAnchorablePane DockWidth="300">
