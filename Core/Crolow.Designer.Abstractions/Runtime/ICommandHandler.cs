@@ -1,6 +1,4 @@
-﻿using Crolow.Designer.Abstractions;
-
-namespace Crolow.Designer.Runtime.Application.Commands;
+﻿namespace Crolow.Designer.Common.Runtime;
 
 public interface ICommandHandler<TCommand, TResult>
 {

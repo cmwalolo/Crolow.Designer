@@ -1,19 +1,58 @@
-﻿using Crolow.Designer.UI;
+﻿using Crolow.Designer.Common.Application;
+using Crolow.Designer.UI;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Windows;
 
-namespace Crolow.Designer.Wpf.App
-{
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-        App()
-        {
-            var r = new RuntimeController();
-            var p = new DocumentsController(r);
+namespace Crolow.Designer.Wpf.App;
 
-        }
+public partial class App : Application
+{
+    public static IHost Host { get; private set; } = null!;
+
+    protected override async void OnStartup(StartupEventArgs e)
+    {
+        Host = Microsoft.Extensions.Hosting.Host
+            .CreateDefaultBuilder()
+
+            .ConfigureAppConfiguration(config =>
+            {
+                config.AddJsonFile("appsettings.json",
+                                   optional: false,
+                                   reloadOnChange: true);
+            })
+
+            .ConfigureServices((context, services) =>
+            {
+                ConfigureServices(services, context.Configuration);
+            })
+
+            .Build();
+
+        await Host.StartAsync();
+
+        var window = Host.Services.GetRequiredService<MainWindow>();
+        window.Show();
+
+        base.OnStartup(e);
     }
 
+    protected override async void OnExit(ExitEventArgs e)
+    {
+        await Host.StopAsync();
+        Host.Dispose();
+
+        base.OnExit(e);
+    }
+
+    private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<RuntimeController>();
+        services.AddSingleton<DocumentsController>();
+        services.AddSingleton<MainWindow>();
+
+        services.Configure<ApplicationOptions>(
+            configuration.GetSection("Application"));
+    }
 }

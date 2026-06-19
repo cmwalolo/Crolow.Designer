@@ -1,4 +1,6 @@
-﻿namespace Crolow.Designer.Abstractions;
+﻿using Crolow.Designer.Common.Constants;
+
+namespace Crolow.Designer.Common.Event;
 
 
 
@@ -13,21 +15,4 @@ public interface IEvent<TSource, TTarget> : IEvent
 {
     public TSource Source { get; }
     public List<TTarget> Target { get; }
-}
-
-public enum EventTarget
-{
-    Runtime = 1,
-    DocumentSessions = 2,
-    DocumentSession = 4
-}
-
-public enum EventAction
-{
-    ObjectCreated,
-    ObjectUpdated,
-    ObjectDeleted,
-    ChildrenCreated,
-    ChildrenUpdated,
-    ChildrenDeleted
 }

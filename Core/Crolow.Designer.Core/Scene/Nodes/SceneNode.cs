@@ -1,4 +1,4 @@
-using Crolow.Designer.Core.Document;
+using Crolow.Designer.Common.Data;
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Styling;
 using Crolow.Designer.Core.Transforms;
@@ -6,10 +6,8 @@ using System.Text.Json.Serialization;
 
 namespace Crolow.Designer.Core.Scene.Nodes;
 
-public abstract class SceneNode : IDataObject
+public abstract class SceneNode : DataObject
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public List<string> Tags { get; set; } = new();
@@ -23,9 +21,9 @@ public abstract class SceneNode : IDataObject
     public Transform2D Transform { get; set; } = new();
 
     public Appearance Appearance { get; set; } = new();
+    public bool IsLocked { get; set; }
+    public bool IsVisible { get; set; }
 
-    [JsonIgnore]
-    public Guid? ParentId { get; set; }
     [JsonIgnore]
     public IDataObject? ParentNode { get; set; }
 

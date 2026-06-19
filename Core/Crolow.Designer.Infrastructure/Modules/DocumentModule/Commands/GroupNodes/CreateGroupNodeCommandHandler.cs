@@ -1,4 +1,4 @@
-﻿using Crolow.Designer.Abstractions;
+﻿using Crolow.Designer.Common.Runtime;
 using Crolow.Designer.Core.Scene.Nodes;
 using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Application.Commands;
@@ -18,7 +18,7 @@ public sealed class CreateGroupNodeCommandHandler
         _runtime = runtime;
     }
 
-    public async Task<Abstractions.ICommandResult<GroupNode>> ExecuteAsync(CreateGroupNodeCommand command)
+    public async Task<ICommandResult<GroupNode>> ExecuteAsync(CreateGroupNodeCommand command)
     {
         var node = new GroupNode { };
         command.Initiator.Children.Add(node);

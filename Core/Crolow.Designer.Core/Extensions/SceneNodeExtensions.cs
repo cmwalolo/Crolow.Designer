@@ -28,5 +28,16 @@ namespace Crolow.Designer.Core.Extensions
             }
         }
 
+        public static void ApplyParents(this List<LayerNode> nodes)
+        {
+            foreach (var child in nodes)
+            {
+                if (child is GroupNode groupNode)
+                {
+                    groupNode.ApplyParents();
+                }
+            }
+        }
+
     }
 }

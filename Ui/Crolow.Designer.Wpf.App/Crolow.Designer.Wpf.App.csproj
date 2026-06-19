@@ -42,6 +42,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Themes\colors.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Resources\Svg\Documents\object-redo.svg" />
     <Resource Include="Resources\Svg\Documents\object-undo.svg" />
   </ItemGroup>
@@ -51,6 +55,9 @@
     <PackageReference Include="Dirkster.AvalonDock.Themes.Arc" Version="4.74.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.74.1" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.9" />
     <PackageReference Include="SharpVectors" Version="1.8.5" />
     <PackageReference Include="SkiaSharp" Version="3.119.4" />
     <PackageReference Include="SkiaSharp.Views.WPF" Version="3.119.4" />
@@ -58,6 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\Crolow.Designer.Data\Crolow.Designer.Data.csproj" />
     <ProjectReference Include="..\Crolow.Designer.UI\Crolow.Designer.UI.csproj" />
   </ItemGroup>
 
@@ -93,5 +101,30 @@
     <Resource Include="Resources\Svg\Documents\view-zoom-in.svg" />
     <Resource Include="Resources\Svg\Documents\view-zoom-out.svg" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Themes\colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Themes\styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://www.schemastore.org/band-manifest.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

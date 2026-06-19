@@ -1,5 +1,5 @@
-﻿using Crolow.Designer.Core.Document;
-using Crolow.Designer.Runtime.Application.Commands;
+﻿using Crolow.Designer.Common.Runtime;
+using Crolow.Designer.Core.Document;
 
 namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Requests;
 

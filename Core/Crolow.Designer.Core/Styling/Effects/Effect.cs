@@ -1,9 +1,8 @@
-using Crolow.Designer.Core.Document;
+using Crolow.Designer.Common.Data;
 
 namespace Crolow.Designer.Core.Styling.Effects;
 
-public abstract class Effect : IDataObject
+public abstract class Effect : DataObject
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
     public bool Enabled { get; set; } = true;
 }

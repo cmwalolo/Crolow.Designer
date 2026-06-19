@@ -1,4 +1,4 @@
-﻿using Crolow.Designer.Abstractions;
+﻿using Crolow.Designer.Common.Event;
 using Crolow.Designer.Runtime.Application.Events;
 using System.Collections.Concurrent;
 

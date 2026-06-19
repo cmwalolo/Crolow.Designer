@@ -1,5 +1,5 @@
 ﻿
-using Crolow.Designer.Core.Document;
+using Crolow.Designer.Common.Data;
 
 namespace Crolow.Designer.Runtime.Application.Sessions.Selections
 {

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Crolow.Designer.Wpf.App"
         xmlns:views="clr-namespace:Crolow.Designer.Wpf.App.Views"
+        xmlns:documentviews="clr-namespace:Crolow.Designer.Wpf.App.Views.Document"
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         xmlns:layout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
         xmlns:Fluent="urn:fluent-ribbon"
@@ -30,7 +31,9 @@
                         <!-- Right pane -->
                         <layout:LayoutAnchorablePane DockWidth="300">
 
-                            <layout:LayoutAnchorable Title="Layers"/>
+                            <layout:LayoutAnchorable Title="Document">
+                                <documentviews:DocumentTreeview/>
+                            </layout:LayoutAnchorable>
 
                             <layout:LayoutAnchorable Title="Properties"/>
 

@@ -1,4 +1,4 @@
-﻿namespace Crolow.Designer.Abstractions
+﻿namespace Crolow.Designer.Common.Runtime
 {
     public class CommandParameterAttribute : Attribute
     {

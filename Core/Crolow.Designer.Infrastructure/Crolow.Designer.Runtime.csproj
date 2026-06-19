@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Crolow.Designer.Abstractions\Crolow.Designer.Abstractions.csproj" />
+    <ProjectReference Include="..\Crolow.Designer.Abstractions\Crolow.Designer.Common.csproj" />
     <ProjectReference Include="..\Crolow.Designer.Core\Crolow.Designer.Core.csproj" />
   </ItemGroup>
 

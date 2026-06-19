@@ -1,4 +1,6 @@
-﻿namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
+﻿using Crolow.Designer.Common.Constants;
+
+namespace Crolow.Designer.Common.Extensions;
 
 public static class GuidExtensions
 {

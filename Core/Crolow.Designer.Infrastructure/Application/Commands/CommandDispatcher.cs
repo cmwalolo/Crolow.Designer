@@ -1,4 +1,4 @@
-﻿using Crolow.Designer.Abstractions;
+﻿using Crolow.Designer.Common.Runtime;
 using System.Reflection;
 
 namespace Crolow.Designer.Runtime.Application.Commands;

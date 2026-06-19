@@ -1,4 +1,5 @@
 ﻿using ControlzEx.Theming;
+using Crolow.Designer.UI;
 
 namespace Crolow.Designer.Wpf.App
 {
@@ -7,7 +8,7 @@ namespace Crolow.Designer.Wpf.App
     /// </summary>
     public partial class MainWindow : Fluent.RibbonWindow
     {
-        public MainWindow()
+        public MainWindow(RuntimeController runtime, DocumentsController documents)
         {
             InitializeComponent();
             dockManager.Theme = new AvalonDock.Themes.ArcDarkTheme();

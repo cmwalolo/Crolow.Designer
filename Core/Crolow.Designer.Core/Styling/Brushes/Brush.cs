@@ -1,9 +1,7 @@
-
-using Crolow.Designer.Core.Document;
+using Crolow.Designer.Common.Data;
 
 namespace Crolow.Designer.Core.Styling.Brushes;
 
-public abstract class Brush : IDataObject
+public abstract class Brush : DataObject
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
 }
