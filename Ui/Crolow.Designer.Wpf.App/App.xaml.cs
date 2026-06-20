@@ -30,6 +30,9 @@ public partial class App : Application
 
             .Build();
 
+        DispatcherUnhandledException += App_DispatcherUnhandledException;
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
         await Host.StartAsync();
 
         var window = Host.Services.GetRequiredService<MainWindow>();
@@ -38,6 +41,29 @@ public partial class App : Application
         base.OnStartup(e);
     }
 
+    private void App_DispatcherUnhandledException(
+        object sender,
+        System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+    {
+        MessageBox.Show(
+            e.Exception.ToString(),
+            "Dispatcher Exception",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error);
+
+        e.Handled = true;
+    }
+
+    private void CurrentDomain_UnhandledException(
+        object sender,
+        UnhandledExceptionEventArgs e)
+    {
+        MessageBox.Show(
+            e.ExceptionObject.ToString(),
+            "Unhandled Exception",
+            MessageBoxButton.OK,
+            MessageBoxImage.Error);
+    }
     protected override async void OnExit(ExitEventArgs e)
     {
         await Host.StopAsync();

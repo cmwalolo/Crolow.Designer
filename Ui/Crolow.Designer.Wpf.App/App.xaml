@@ -8,7 +8,9 @@
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
                 <ResourceDictionary Source="Resources/DictionaryStyles.xaml"/>
                 <ResourceDictionary Source="Themes/Styles.xaml"/>
-                <ResourceDictionary Source="Themes/Dialogs.xaml"/>
+                <ResourceDictionary Source="Themes/DialogColors.xaml"/>
+                <ResourceDictionary Source="Themes/Dialog.xaml"/>
+                <ResourceDictionary Source="Themes/DialogControls.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

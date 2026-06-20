@@ -22,8 +22,6 @@
                     Height="28"
                     ToolTip="Edit"
                     Click="EditDocument_Click"
-                    Background="black"
-                    Foreground="white"
                     Cursor="Hand">
                     <Viewbox  Width="16" Height="16">
                         <svgc:SvgViewbox Source="/Resources/Svg/Documents/object-edit.svg"/>

@@ -1,0 +1,163 @@
+﻿<Window x:Class="Crolow.Designer.Wpf.App.Views.Document.DesignDocumentEditorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Crolow.Designer.Wpf.App.Controls.Tags"
+        Style="{StaticResource DialogWindow}"
+        Title="Document Properties"
+        Width="760"
+        Height="650">
+
+    <Border Style="{StaticResource DialogBorder}">
+
+        <DockPanel>
+
+            <!-- ====================================================== -->
+            <!-- Buttons                                                 -->
+            <!-- ====================================================== -->
+
+            <StackPanel DockPanel.Dock="Bottom"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,20,0,0">
+
+                <Button Style="{StaticResource DialogButton}"
+                        Content="Cancel"
+                        Margin="0,0,8,0"
+                        Command="{Binding CancelCommand}" />
+
+                <Button Style="{StaticResource DialogButton}"
+                        Content="Apply"
+                        IsDefault="True"
+                        Command="{Binding ApplyCommand}" />
+
+            </StackPanel>
+
+            <!-- ====================================================== -->
+            <!-- Form                                                    -->
+            <!-- ====================================================== -->
+
+            <ScrollViewer Style="{StaticResource DialogScrollViewer}">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="16"/>
+
+                    </Grid.RowDefinitions>
+
+                    <!-- ================================================== -->
+                    <!-- Name                                                -->
+                    <!-- ================================================== -->
+
+                    <TextBlock Grid.Row="0"
+                               Style="{StaticResource DialogLabel}"
+                               Text="Name"/>
+
+                    <TextBox Grid.Row="0"
+                             Grid.Column="1"
+                             Style="{StaticResource DialogTextBox}"
+                             Text="{Binding Name}" />
+
+                    <!-- ================================================== -->
+                    <!-- Description                                         -->
+                    <!-- ================================================== -->
+
+                    <TextBlock Grid.Row="2"
+                               Style="{StaticResource DialogLabel}"
+                               VerticalAlignment="Top"
+                               Text="Description"/>
+
+                    <TextBox Grid.Row="2"
+                             Grid.Column="1"
+                             Style="{StaticResource DialogTextArea}"
+                             Height="150"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"
+                             Text="{Binding Description}" />
+
+                    <!-- ================================================== -->
+                    <!-- File                                                -->
+                    <!-- ================================================== -->
+
+                    <TextBlock Grid.Row="4"
+                               Style="{StaticResource DialogLabel}"
+                               Text="File"/>
+
+                    <TextBox Grid.Row="4"
+                             Grid.Column="1"
+                             Style="{StaticResource DialogTextBox}"
+                             Text="{Binding FilePath}" />
+
+                    <!-- ================================================== -->
+                    <!-- Canvas                                              -->
+                    <!-- ================================================== -->
+
+                    <TextBlock Grid.Row="6"
+                               Style="{StaticResource DialogLabel}"
+                               Text="Canvas Size"/>
+
+                    <StackPanel Grid.Row="6"
+                                Grid.Column="1"
+                                Orientation="Horizontal">
+
+                        <TextBox Width="90"
+                                 Style="{StaticResource DialogTextBox}"
+                                 Text="{Binding CanvasWidth}" />
+
+                        <TextBlock Margin="8,6"
+                                   VerticalAlignment="Center"
+                                   Text="×"/>
+
+                        <TextBox Width="90"
+                                 Style="{StaticResource DialogTextBox}"
+                                 Text="{Binding CanvasHeight}" />
+
+                        <TextBlock Margin="10,6,0,0"
+                                   VerticalAlignment="Center"
+                                   Text="pixels"/>
+
+                    </StackPanel>
+
+                    <!-- ================================================== -->
+                    <!-- Tags                                                -->
+                    <!-- ================================================== -->
+
+                    <TextBlock Grid.Row="8"
+                               Style="{StaticResource DialogLabel}"
+                               VerticalAlignment="Top"
+                               Text="Tags"/>
+
+                    <controls:TagEditor Grid.Row="8"
+                                        Grid.Column="1"
+                                        MinHeight="40"
+                                        Tags="{Binding Tags}" />
+
+                </Grid>
+
+            </ScrollViewer>
+
+        </DockPanel>
+
+    </Border>
+
+</Window>

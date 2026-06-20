@@ -19,17 +19,17 @@ namespace Crolow.Designer.Wpf.App.Views
         {
 
             var doc = new DesignDocument();
-            var vm = new DesignDocumentDialogViewModel(doc);
+            var vm = new DesignDocumentViewModel(doc);
 
-            var dialog = new DesignDocumentDialog
+            var dialog = new DesignDocumentEditorDialog
             {
                 Owner = System.Windows.Application.Current.MainWindow,
                 DataContext = vm
             };
 
-            vm.CloseAction = (x) =>
+            vm.RequestClose += (result) =>
             {
-                dialog.DialogResult = x;
+                dialog.DialogResult = result;
                 dialog.Close();
             };
 
