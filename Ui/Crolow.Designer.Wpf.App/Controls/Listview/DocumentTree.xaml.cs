@@ -28,7 +28,6 @@ namespace Crolow.Designer.Wpf.App.Controls.Listview
         public void Refresh()
         {
             Root.Children.Clear();
-
             foreach (TreeNode node in Nodes)
             {
                 Root.Children.Add(

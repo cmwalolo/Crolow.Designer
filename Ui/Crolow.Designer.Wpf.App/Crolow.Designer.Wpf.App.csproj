@@ -52,9 +52,10 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-    <PackageReference Include="Dirkster.AvalonDock" Version="4.74.1" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.Arc" Version="4.74.1" />
-    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.74.1" />
+    <PackageReference Include="Dirkster.AvalonDock" Version="5.0.0-preview.86" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.Arc" Version="5.0.0-preview.86" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS" Version="5.0.0-preview.86" />
+    <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="5.0.0-preview.86" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.9" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.9" />

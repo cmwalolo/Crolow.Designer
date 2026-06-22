@@ -2,11 +2,14 @@
 using CommunityToolkit.Mvvm.Input;
 using Crolow.Designer.Core.Document;
 using Crolow.Designer.Core.Geometry;
+using Crolow.Designer.Wpf.App.Extensions;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Crolow.Designer.Wpf.App.Views.Document
 {
+
     /// <summary>
     /// Interaction logic for DesignDocumentLayout.xaml
     /// </summary>
@@ -15,6 +18,11 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         public DesignDocumentEditorDialog()
         {
             InitializeComponent();
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            Keyboard.FocusedElement?.UpdateBindings();
         }
     }
 

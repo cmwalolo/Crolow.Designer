@@ -8,7 +8,7 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers;
 
 [CommandParameter(typeof(CreateLayerCommand))]
 public sealed class CreateLayerCommandHandler
-    : ICommandHandler<CreateLayerCommand, LayerNode>
+    : ICommandHandler<CreateLayerCommand, PageNode>
 {
     private readonly DesignerRuntime _runtime;
 
@@ -18,14 +18,14 @@ public sealed class CreateLayerCommandHandler
         _runtime = runtime;
     }
 
-    public async Task<ICommandResult<LayerNode>> ExecuteAsync(CreateLayerCommand command)
+    public async Task<ICommandResult<PageNode>> ExecuteAsync(CreateLayerCommand command)
     {
-        var layer = new LayerNode { };
-        command.Initiator.Layers.Add(layer);
+        var layer = new PageNode { };
+        command.Initiator.Pages.Add(layer);
         layer.ParentId = command.Initiator.Id;
         layer.ParentNode = command.Initiator;
 
-        return new CommandResult<LayerNode>
+        return new CommandResult<PageNode>
         {
             ResponseCode = 0,
             ResponseMessage = "Layer created successfully",

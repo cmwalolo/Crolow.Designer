@@ -1,4 +1,5 @@
-﻿using Crolow.Designer.Runtime.Application;
+﻿using Crolow.Designer.Core.Scene.Nodes;
+using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Application.Sessions.Selections;
 using Crolow.Designer.Runtime.Modules.DocumentModule;
 
@@ -10,11 +11,13 @@ namespace Crolow.Designer.UI
         protected DocumentsController manager;
 
         public DocumentSession Session { get; set; }
+        public PageNode ActivePage { get; set; }
         public SelectionRegistry Selections { get; set; } = new SelectionRegistry();
 
         public DocumentController(DocumentSession session)
         {
             this.Session = session;
+            this.ActivePage = session.Document.Pages.FirstOrDefault();
         }
     }
 }

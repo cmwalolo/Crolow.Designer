@@ -6,8 +6,10 @@ namespace Crolow.Designer.Core.Extensions
     {
         public static void ApplyParents(this GroupNode node)
         {
+            int position = 1;
             foreach (var child in node.Children)
             {
+                child.Position = position++;
                 child.ParentNode = node;
                 child.ParentId = node.Id;
                 if (child is GroupNode groupNode)
@@ -28,7 +30,7 @@ namespace Crolow.Designer.Core.Extensions
             }
         }
 
-        public static void ApplyParents(this List<LayerNode> nodes)
+        public static void ApplyParents(this List<PageNode> nodes)
         {
             foreach (var child in nodes)
             {

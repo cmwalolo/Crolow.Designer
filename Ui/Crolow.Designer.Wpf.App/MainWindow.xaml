@@ -16,6 +16,29 @@
     <DockPanel>
         <views:MainPageRibbon DockPanel.Dock="Top"/>
         <ad:DockingManager x:Name="dockManager">
+            <DockingManager.Theme>
+                <ArcDarkTheme/>
+            </DockingManager.Theme>
+            <DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <Border Margin="5,5,5,5">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16" Height="16" Margin="0,0,4,0" Source="{Binding IconSource}">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <Trigger Property="Source" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </DockingManager.DocumentHeaderTemplate>
             <ad:DockingManager.Layout>
                 <layout:LayoutRoot xmlns="http://schemas.datacontract.org/2004/07/AvalonDock.Layout">
 

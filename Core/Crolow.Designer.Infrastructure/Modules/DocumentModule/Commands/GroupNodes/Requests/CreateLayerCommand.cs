@@ -4,14 +4,14 @@ using Crolow.Designer.Core.Scene.Nodes;
 
 namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers.Requests;
 
-public sealed record CreateLayerCommand : ICommandParameter<DesignDocument, LayerNode, LayerNode>
+public sealed record CreateLayerCommand : ICommandParameter<DesignDocument, PageNode, PageNode>
 {
-    public CreateLayerCommand(DesignDocument document, LayerNode layer)
+    public CreateLayerCommand(DesignDocument document, PageNode layer)
     {
         Initiator = document;
         Request = layer;
     }
 
     public DesignDocument Initiator { get; set; }
-    public LayerNode Request { get; set; }
+    public PageNode Request { get; set; }
 }

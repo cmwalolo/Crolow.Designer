@@ -1,5 +1,4 @@
-﻿using Crolow.Designer.Common;
-using Crolow.Designer.Common.Constants;
+﻿using Crolow.Designer.Common.Constants;
 using Crolow.Designer.Common.Extensions;
 using Crolow.Designer.Common.Runtime;
 using Crolow.Designer.Core.Extensions;
@@ -28,16 +27,17 @@ public sealed class CreateDocumentCommandHandler
             CreateDocumentCommand command)
     {
 
-        command.Request.Layers.Add(
-            new Core.Scene.Nodes.LayerNode
+        command.Request.Pages.Add(
+            new Core.Scene.Nodes.PageNode
             {
                 ParentId = command.Request.Id,
                 ParentNode = command.Request,
-                Name = "Default Layer"
+                Name = "Default Layer",
+                Size = command.Request.Size
             }
             );
 
-        command.Request.Layers.ApplyParents();
+        command.Request.Pages.ApplyParents();
 
         var session = new DocumentSession(command.Initiator, _runtime, command.Request);
         command.Initiator.Documents.Add(session);

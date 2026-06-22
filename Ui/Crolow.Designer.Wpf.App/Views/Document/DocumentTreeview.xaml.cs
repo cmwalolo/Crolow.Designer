@@ -1,9 +1,12 @@
 ﻿using Crolow.Designer.Common.Constants;
 using Crolow.Designer.Common.Extensions;
+using Crolow.Designer.Core.Scene.Nodes;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
 using Crolow.Designer.UI;
+using Crolow.Designer.Wpf.App.Controls;
 using System.Windows;
 using System.Windows.Controls;
+using data = Crolow.Designer.Common.Data;
 
 namespace Crolow.Designer.Wpf.App.Views.Document
 {
@@ -13,6 +16,9 @@ namespace Crolow.Designer.Wpf.App.Views.Document
     public partial class DocumentTreeview : UserControl, IDisposable
     {
         private IDisposable documentSubscription;
+
+        DocumentController documentController;
+
         public DocumentTreeview()
         {
             InitializeComponent();
@@ -39,12 +45,34 @@ namespace Crolow.Designer.Wpf.App.Views.Document
 
         private async Task OnActivateDocumentEvent(DocumentActivatedEvent doc)
         {
+            documentController = doc.Target.FirstOrDefault();
             switch (doc.EventAction)
             {
                 case EventAction.ObjectActivated:
                     DocumentTree.Clear();
+                    DocumentTree.Nodes.Clear();
+                    foreach (var node in documentController.Session.Document.Pages)
+                    {
+                        DocumentTree.Nodes.Add(AddNodes(node, null));
+                    }
+                    DocumentTree.Refresh();
                     break;
             }
+        }
+
+        private TreeNode AddNodes(data.IDataObject node, TreeNode parent)
+        {
+            var newNode = new TreeNode { Text = node.Name };
+
+            if (node is GroupNode groupNode)
+            {
+                foreach (var child in groupNode.Children)
+                {
+                    AddNodes(child, newNode);
+                }
+            }
+
+            return newNode;
         }
 
         private void EditDocument_Click(object sender, RoutedEventArgs e)

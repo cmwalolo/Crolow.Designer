@@ -7,6 +7,8 @@
             xmlns:Fluent="urn:fluent-ribbon" 
             x:Class="Crolow.Designer.Wpf.App.Views.Document.DocumentCanvas"
             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" 
+            xmlns:svg="http://sharpvectors.codeplex.com/runtime"
+            xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
             xmlns:listview="clr-namespace:Crolow.Designer.Wpf.App.Controls.Listview"
             mc:Ignorable="d" 
             d:DesignHeight="450" d:DesignWidth="800">
@@ -34,6 +36,19 @@
                 </Button>
             </StackPanel>
         </Border>
-        <listview:DocumentTree Grid.Row="1" x:Name="DocumentTree"/>
+        <Border Grid.Row="1" x:Name="CanvasBorder" Background="Transparent">
+            <Grid>
+                <skia:SKElement x:Name="SkCanvas"
+                                PaintSurface="OnCanvasPaintSurface"
+                        IgnorePixelScaling="True"/>
+
+                <skia:SKElement x:Name="SkOverlay"
+                        PaintSurface="OnOverlayPaintSurface"
+                        MouseDown="OnOverlayMouseDown"
+                        MouseMove="OnOverlayMouseMove"
+                        MouseUp="OnOverlayMouseUp"
+                        IgnorePixelScaling="True"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

@@ -2,7 +2,6 @@ using Crolow.Designer.Common.Data;
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Styling;
 using Crolow.Designer.Core.Transforms;
-using System.Text.Json.Serialization;
 
 namespace Crolow.Designer.Core.Scene.Nodes;
 
@@ -23,8 +22,4 @@ public abstract class SceneNode : DataObject
     public Appearance Appearance { get; set; } = new();
     public bool IsLocked { get; set; }
     public bool IsVisible { get; set; }
-
-    [JsonIgnore]
-    public IDataObject? ParentNode { get; set; }
-
 }

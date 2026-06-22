@@ -7,6 +7,6 @@ namespace Crolow.Designer.Core.Document;
 public class DesignDocument : DataObject
 {
     public Size2D Size { get; set; }
-    public List<LayerNode> Layers { get; set; } = [];
+    public List<PageNode> Pages { get; set; } = [];
     public string FilePath { get; set; } = "";
 }

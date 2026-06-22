@@ -28,6 +28,7 @@
                 <Button Style="{StaticResource DialogButton}"
                         Content="Apply"
                         IsDefault="True"
+                        Click="Apply_Click"    
                         Command="{Binding ApplyCommand}" />
 
             </StackPanel>

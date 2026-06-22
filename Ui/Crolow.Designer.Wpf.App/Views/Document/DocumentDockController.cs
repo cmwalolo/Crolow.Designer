@@ -26,12 +26,13 @@ public sealed class DocumentDockController : IDisposable
                 {
                     if (docEvent.NewlyCreated)
                     {
-                        var canvas = new DocumentTreeview();
+                        var canvas = new DocumentCanvas(doc);
                         var layoutDocument = new LayoutDocument
                         {
                             Title = doc.Session.Document.Name,
                             Content = canvas,
-                            IsActive = true,
+                            IsActive = false,
+                            IsSelected = true,
                             ContentId = doc.Session.Document.Id.ToString()
                         };
                         layoutDocumentPane.Children.Add(layoutDocument);

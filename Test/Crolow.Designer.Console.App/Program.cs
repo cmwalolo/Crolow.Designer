@@ -19,7 +19,7 @@ public static class Program
              await runtime.Commands.ExecuteAsync(new CreateDocumentCommand(documentSessionManager, new Crolow.Designer.Core.Document.DesignDocument()));
 
         var layer = await runtime.Commands.ExecuteAsync(
-                new CreateLayerCommand(document.Result.Document, new LayerNode { Name = "Layer 1" }));
+                new CreateLayerCommand(document.Result.Document, new PageNode { Name = "Layer 1" }));
 
         await runtime.Commands.ExecuteAsync(
             new CreateSceneNodeCommand(
@@ -30,7 +30,7 @@ public static class Program
                 layer.Result, new RectangleShape { Name = "Rectangle 2" }));
 
         var layer2 = await runtime.Commands.ExecuteAsync(
-                new CreateLayerCommand(document.Result.Document, new LayerNode { Name = "Layer 2" }));
+                new CreateLayerCommand(document.Result.Document, new PageNode { Name = "Layer 2" }));
 
         await runtime.Commands.ExecuteAsync(
             new CreateSceneNodeCommand(
@@ -41,8 +41,8 @@ public static class Program
                 layer2.Result, new RectangleShape { Name = "Rectangle 2" }));
 
 
-        var layers = document.Result.Document.Layers.Count();
-        var objects = document.Result.Document.Layers.SelectMany(x => x.Children).Count();
+        var layers = document.Result.Document.Pages.Count();
+        var objects = document.Result.Document.Pages.SelectMany(x => x.Children).Count();
 
         Console.WriteLine(
             $"# Layers : {layers}");
