@@ -40,7 +40,13 @@
                     </Fluent:Button>
                 </Fluent:RibbonGroupBox>
                 <Fluent:RibbonGroupBox Header="Clipboard">
-                    <Fluent:Button Header="Copy">
+                    <Fluent:Button Header="Select">
+                        <Fluent:Button.Icon>
+                            <Viewbox Width="16" Height="16">
+                                <svgc:SvgViewbox Source="/Resources/Svg/Documents/ui-select-rectangle.svg" />
+                            </Viewbox>
+                        </Fluent:Button.Icon>
+                    </Fluent:Button>                    <Fluent:Button Header="Copy">
                         <Fluent:Button.Icon>
                             <Viewbox Width="16" Height="16">
                                 <svgc:SvgViewbox Source="/Resources/Svg/Documents/object-copy.svg" />

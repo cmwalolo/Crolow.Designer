@@ -105,7 +105,7 @@ namespace Crolow.Designer.Wpf.App.Controls.Listview
 
             ClearSelection();
 
-            var siblings = node.Parent!.Children;
+            var siblings = node.Parent.Children;
 
             int first = siblings.IndexOf(selectionAnchor);
             int last = siblings.IndexOf(node);

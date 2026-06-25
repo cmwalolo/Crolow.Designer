@@ -4,6 +4,7 @@ using Crolow.Designer.Core.Document;
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Wpf.App.Extensions;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Windows;
 using System.Windows.Input;
 
@@ -26,7 +27,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         }
     }
 
-    public partial class DesignDocumentViewModel : ObservableObject
+    public partial class DesignDocumentViewModel : ObservableValidator
     {
         private readonly DesignDocument _document;
 
@@ -50,6 +51,8 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         #region Properties
 
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "The document name is required.")]
         private string _name = string.Empty;
 
         [ObservableProperty]
@@ -59,9 +62,14 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         private string _filePath = string.Empty;
 
         [ObservableProperty]
+        [NotifyDataErrorInfo]
+        [Required(ErrorMessage = "Size is required.")]
+        [Range(1, 1000000, ErrorMessage = "Size is required.")]
         private float _canvasWidth;
 
         [ObservableProperty]
+        [Required(ErrorMessage = "Size is required.")]
+        [Range(1, 1000000, ErrorMessage = "Size is required.")]
         private float _canvasHeight;
 
         public ObservableCollection<string> Tags { get; }
@@ -86,6 +94,10 @@ namespace Crolow.Designer.Wpf.App.Views.Document
 
         private void Apply()
         {
+            ValidateAllProperties();
+            if (HasErrors)
+                return;
+
             _document.Name = Name;
             _document.Description = Description;
             _document.FilePath = FilePath;

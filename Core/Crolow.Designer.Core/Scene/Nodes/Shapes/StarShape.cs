@@ -2,7 +2,7 @@ namespace Crolow.Designer.Core.Scene.Nodes.Objects;
 
 public class StarShape : SceneNode
 {
-    public int Points { get; set; }
+    public int Peaks { get; set; }
 
     public double InnerRadius { get; set; }
 

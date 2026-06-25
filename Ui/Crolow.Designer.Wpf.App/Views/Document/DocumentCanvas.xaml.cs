@@ -73,8 +73,11 @@ namespace Crolow.Designer.Wpf.App.Views.Document
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 canvasSettings.IsSelected = false;
+                canvasSettings.IsDragging = false;
                 canvasSettings.IsDrawing = true;
+
                 var p = e.GetPosition(SkOverlay);
+                canvasSettings.CurrentPoint = new SKPoint((float)p.X, (float)p.Y);
                 canvasSettings.CurentSelectionArea.Left = (float)p.X;
                 canvasSettings.CurentSelectionArea.Top = (float)p.Y;
                 canvasSettings.CurentSelectionArea.Right = (float)p.X;
@@ -101,6 +104,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document
                 canvasSettings.IsDrawing = false;
                 canvasSettings.IsSelected = true;
                 documentSettings.IsSelected = true;
+
                 SkOverlay.ReleaseMouseCapture();
 
                 float left = (float)Math.Min(canvasSettings.CurentSelectionArea.Left, canvasSettings.CurrentPoint.X);
@@ -110,8 +114,15 @@ namespace Crolow.Designer.Wpf.App.Views.Document
                 canvasSettings.CurentSelectionArea =
                     new SKRect(left, top, right, bottom);
 
+                if (!canvasSettings.IsDragging &&
+                        (canvasSettings.CurentSelectionArea.Width <= 4 || canvasSettings.CurentSelectionArea.Height <= 4))
+                {
+                    canvasSettings.IsRectangleSelected = false;
+                    SkOverlay.InvalidateVisual();
+                    return;
+                }
+                canvasSettings.IsRectangleSelected = true;
                 documentSettings.CurrentSelectionArea = canvasSettings.ScaleToPixels(canvasSettings.CurentSelectionArea);
-                documentSettings.IsSelected = true;
 
                 SkOverlay.InvalidateVisual();
 
@@ -124,7 +135,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document
             canvas.Clear(SKColors.Transparent); // Base background color
 
             // Only render a rectangle if the user has clicked and dragged
-            if (canvasSettings.IsDrawing || canvasSettings.IsSelected)
+            if (canvasSettings.IsDrawing || canvasSettings.IsRectangleSelected)
             {
                 // Define the cosmetic style of your rectangle
                 using (var paint = new SKPaint())
@@ -141,8 +152,18 @@ namespace Crolow.Designer.Wpf.App.Views.Document
                         float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Top, canvasSettings.CurrentPoint.Y);
                         float right = (float)Math.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
                         float bottom = (float)Math.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
-                        // Create the drawing boundary
                         rect = new SKRect(left, top, right, bottom);
+
+                        if (!canvasSettings.IsDragging &&
+                                (rect.Width <= 4 || rect.Height <= 4))
+                        {
+                            canvasSettings.IsDragging = false;
+                            return;
+                        }
+
+                        canvasSettings.IsDragging = true;
+
+                        // Create the drawing boundary
                         float[] intervals = new float[] { 10, 10 };
                         paint.PathEffect = SKPathEffect.CreateDash(intervals, 0);
                     }
@@ -175,6 +196,10 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         {
         }
 
+        private void ToggleButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
         private void EditDocument_Click(object sender, RoutedEventArgs e)
         {
 

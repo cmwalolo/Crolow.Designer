@@ -75,8 +75,8 @@
 
                     <TextBox Grid.Row="0"
                              Grid.Column="1"
-                             Style="{StaticResource DialogTextBox}"
-                             Text="{Binding Name}" />
+                             Style="{StaticResource ValidatedDialogTextBox}"
+                             Text="{Binding Name, ValidatesOnNotifyDataErrors=True}" />
 
                     <!-- ================================================== -->
                     <!-- Description                                         -->
@@ -94,7 +94,7 @@
                              AcceptsReturn="True"
                              TextWrapping="Wrap"
                              VerticalScrollBarVisibility="Auto"
-                             Text="{Binding Description}" />
+                             Text="{Binding Description}"/>
 
                     <!-- ================================================== -->
                     <!-- File                                                -->
@@ -122,16 +122,16 @@
                                 Orientation="Horizontal">
 
                         <TextBox Width="90"
-                                 Style="{StaticResource DialogTextBox}"
-                                 Text="{Binding CanvasWidth}" />
+                                 Style="{StaticResource ValidatedDialogTextBox}"
+                                 Text="{Binding CanvasWidth, ValidatesOnNotifyDataErrors=True}" />
 
                         <TextBlock Margin="8,6"
                                    VerticalAlignment="Center"
                                    Text="×"/>
 
                         <TextBox Width="90"
-                                 Style="{StaticResource DialogTextBox}"
-                                 Text="{Binding CanvasHeight}" />
+                                  Style="{StaticResource ValidatedDialogTextBox}"
+                                 Text="{Binding CanvasHeight, ValidatesOnNotifyDataErrors=True}" />
 
                         <TextBlock Margin="10,6,0,0"
                                    VerticalAlignment="Center"

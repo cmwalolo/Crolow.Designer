@@ -9,7 +9,7 @@ namespace Crolow.Designer.Wpf.App.Controls.Listview
     /// <summary>
     /// Interaction logic for DocumentTreeNode.xaml
     /// </summary>
-    public partial class DocumentTreeNode : UserControl
+    public partial class DocumentTreeNode : UserControl, IDisposable
     {
         public TreeNode Node { get; }
         public DocumentTree Tree { get; set; }
@@ -24,16 +24,14 @@ namespace Crolow.Designer.Wpf.App.Controls.Listview
 
             GridRow.MouseLeftButtonUp += GridRow_MouseLeftButtonUp;
             Node.PropertyChanged += Node_PropertyChanged;
-            Unloaded += OnUnloaded;
 
-            PanelRow.Margin = new Thickness(10 * (level - 1), 0, 0, 0);
+            PanelRow.Margin = new Thickness(5 * (level - 1), 0, 0, 0);
 
             Caption.Text = node.Text;
-
-            Chevron.Text = node.HasChildren
-                ? (node.IsExpanded ? "▼" : "▶")
-                : "";
+            Chevron.Text = node.HasChildren ? (node.IsExpanded ? "▼" : "▶") : "";
             Chevron.MouseLeftButtonUp += Chevron_Click;
+
+            VisibilityToggle.Background = node.IsVisible ? Brushes.SeaGreen : Brushes.DarkRed;
 
             if (node.IsExpanded)
             {
@@ -55,12 +53,6 @@ namespace Crolow.Designer.Wpf.App.Controls.Listview
             }
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            Node.PropertyChanged -= Node_PropertyChanged;
-            Unloaded -= OnUnloaded;
-        }
-
         private void UpdateSelection()
         {
             GridRow.Background = Node.IsSelected
@@ -70,11 +62,8 @@ namespace Crolow.Designer.Wpf.App.Controls.Listview
 
         private void GridRow_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //if (sender is Grid && ((Grid)sender).Name == "GridRow")
-            //{
             e.Handled = true;
             Tree.Select(Node, Keyboard.Modifiers);
-            //}
         }
 
         private void Chevron_Click(object sender, MouseButtonEventArgs e)
@@ -92,26 +81,38 @@ namespace Crolow.Designer.Wpf.App.Controls.Listview
         private void Expand()
         {
             Node.IsExpanded = true;
-
             Chevron.Text = "▼";
-
             foreach (TreeNode child in Node.Children)
             {
                 ChildrenPanel.Children.Add(
                     new DocumentTreeNode(Tree, child, Level + 1));
             }
-
             ChildrenPanel.Visibility = Visibility.Visible;
         }
 
         private void Collapse()
         {
             Node.IsExpanded = false;
-
             Chevron.Text = "▶";
-
             ChildrenPanel.Visibility = Visibility.Collapsed;
             ChildrenPanel.Children.Clear();
+        }
+
+        private void VisibilityToggle_Click(object sender, RoutedEventArgs e)
+        {
+            Node.IsVisible = !Node.IsVisible;
+            VisibilityToggle.Background = Node.IsVisible ? Brushes.SeaGreen : Brushes.DarkRed;
+            e.Handled = true;
+        }
+
+        private void EditNode_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        public void Dispose()
+        {
+            Node.PropertyChanged -= Node_PropertyChanged;
         }
     }
 }

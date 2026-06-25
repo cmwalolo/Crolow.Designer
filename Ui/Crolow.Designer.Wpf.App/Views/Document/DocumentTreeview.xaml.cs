@@ -23,24 +23,9 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         {
             InitializeComponent();
 
-            //var document = new TreeNode { Text = "Document" };
-            //var page1 = new TreeNode { Parent = document, Text = "Page 1" };
-            //page1.Children.Add(new TreeNode { Parent = page1, Text = "Image" });
-            //page1.Children.Add(new TreeNode { Parent = page1, Text = "Text" });
-
-            //var page2 = new TreeNode { Parent = document, Text = "Page 2" };
-            //page2.Children.Add(new TreeNode { Text = "Rectangle" });
-
-            //document.Children.Add(page1);
-            //document.Children.Add(page2);
-
-            //DocumentTree.Nodes.Add(document);
-            //DocumentTree.Refresh();
-
             documentSubscription = RuntimeController.Runtime.Events
                         .Subscribe<DocumentActivatedEvent>(GuidSources.Documents.GenerateGuid(), OnActivateDocumentEvent);
         }
-
 
 
         private async Task OnActivateDocumentEvent(DocumentActivatedEvent doc)
@@ -62,7 +47,17 @@ namespace Crolow.Designer.Wpf.App.Views.Document
 
         private TreeNode AddNodes(data.IDataObject node, TreeNode parent)
         {
-            var newNode = new TreeNode { Text = node.Name };
+            var newNode = new TreeNode { Text = node.Name, DataObject = node, IsVisible = true };
+            if (parent != null)
+            {
+                parent.Children.Add(newNode);
+                newNode.Parent = parent;
+            }
+
+            if (node is SceneNode sceneNode)
+            {
+                newNode.IsVisible = sceneNode.IsVisible;
+            }
 
             if (node is GroupNode groupNode)
             {

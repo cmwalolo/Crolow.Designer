@@ -4,8 +4,10 @@ namespace Crolow.Designer.UI.Utils
 {
     public class CurrentCanvasSettings
     {
+        public bool IsDragging = false;
         public bool IsDrawing = false;
         public bool IsSelected = false;
+        public bool IsRectangleSelected = false;
         public SKPoint CurrentPoint;
         public SKRect CurentSelectionArea;
         public float ZoomFactor = 1f;

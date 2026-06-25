@@ -11,8 +11,6 @@ public abstract class SceneNode : DataObject
     public string Description { get; set; } = string.Empty;
     public List<string> Tags { get; set; } = new();
 
-    public bool Visible { get; set; } = true;
-
     public double Opacity { get; set; } = 1.0;
 
     public Rect2D Canvas { get; set; }
@@ -21,5 +19,5 @@ public abstract class SceneNode : DataObject
 
     public Appearance Appearance { get; set; } = new();
     public bool IsLocked { get; set; }
-    public bool IsVisible { get; set; }
+    public bool IsVisible { get; set; } = true;
 }

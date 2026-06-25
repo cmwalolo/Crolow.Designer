@@ -74,6 +74,21 @@
 
     </Style>
 
+    <Style x:Key="ValidatedDialogTextBox"
+       TargetType="TextBox"
+       BasedOn="{StaticResource DialogTextBox}">
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="ToolTip"
+                    Value="{Binding RelativeSource={RelativeSource Self},
+                        Path=(Validation.Errors)[0].ErrorContent}" />
+                <Setter Property="ToolTipService.InitialShowDelay" Value="100"/>
+                <Setter Property="ToolTipService.ShowDuration" Value="30000"/>
+                <Setter Property="ToolTipService.BetweenShowDelay" Value="0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="DialogTextArea"
        TargetType="{x:Type TextBox}"
        BasedOn="{StaticResource DialogTextBox}">

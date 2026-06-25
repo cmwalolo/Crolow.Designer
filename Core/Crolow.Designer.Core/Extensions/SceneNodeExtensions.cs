@@ -1,4 +1,5 @@
-﻿using Crolow.Designer.Core.Scene.Nodes;
+﻿using Crolow.Designer.Core.Document;
+using Crolow.Designer.Core.Scene.Nodes;
 
 namespace Crolow.Designer.Core.Extensions
 {
@@ -30,10 +31,15 @@ namespace Crolow.Designer.Core.Extensions
             }
         }
 
-        public static void ApplyParents(this List<PageNode> nodes)
+        public static void ApplyParents(this DesignDocument document)
         {
-            foreach (var child in nodes)
+            int position = 1;
+            foreach (var child in document.Pages)
             {
+                child.Position = position++;
+                child.ParentNode = document;
+                child.ParentId = document.Id;
+
                 if (child is GroupNode groupNode)
                 {
                     groupNode.ApplyParents();

@@ -11,8 +11,9 @@ namespace Crolow.Designer.UI
         protected DocumentsController manager;
 
         public DocumentSession Session { get; set; }
-        public PageNode ActivePage { get; set; }
         public SelectionRegistry Selections { get; set; } = new SelectionRegistry();
+        public PageNode ActivePage { get; set; }
+        public GroupNode ActiveGroup { get; set; }
 
         public DocumentController(DocumentSession session)
         {

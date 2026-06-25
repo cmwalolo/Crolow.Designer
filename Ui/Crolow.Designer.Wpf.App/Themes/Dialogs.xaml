@@ -27,6 +27,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="6,3"/>
     </Style>
+
     <!-- Button -->
     <Style TargetType="{x:Type Button}">
         <Setter Property="Background" Value="#404040"/>

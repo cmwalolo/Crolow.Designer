@@ -4,15 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Crolow.Designer.Wpf.App.Views.Document"
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+             xmlns:Fluent="urn:fluent-ribbon"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel x:Name="PanelRow" Background="#2D2D30">
-        <Grid x:Name="GridRow" Height="24">
-
+        <Grid x:Name="GridRow" Height="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="20"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock x:Name="Chevron"
@@ -34,6 +37,13 @@
                    VerticalAlignment="Center"
                    Foreground="White"
                    Text="Node"/>
+            
+            <Button x:Name="EditNode" Grid.Column="3" Width="32" Height="32" Margin="0,0,0,0" Click="EditNode_Click">
+                <Image Width="12" Height="12" Source="{svgc:SvgImage Source=/Resources/Svg/Documents/object-edit.svg}" />
+            </Button>
+            <Button x:Name="VisibilityToggle" Grid.Column="4" Width="32" Height="32" Click="VisibilityToggle_Click">
+                <Image Width="12" Height="12" Source="{svgc:SvgImage Source=/Resources/Svg/Documents/object-visible.svg}" />
+            </Button>
         </Grid>
         <StackPanel x:Name="ChildrenPanel"/>
     </StackPanel>

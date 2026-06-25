@@ -4,69 +4,66 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Crolow.Designer.Wpf.App"
+        xmlns:enum ="clr-namespace:Crolow.Designer.UI.Enumerations;assembly=Crolow.Designer.UI"
         xmlns:views="clr-namespace:Crolow.Designer.Wpf.App.Views"
         xmlns:documentviews="clr-namespace:Crolow.Designer.Wpf.App.Views.Document"
         xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
         xmlns:layout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
         xmlns:Fluent="urn:fluent-ribbon"
+        xmlns:svg="http://sharpvectors.codeplex.com/runtime"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:controls="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <DockPanel>
         <views:MainPageRibbon DockPanel.Dock="Top"/>
-        <ad:DockingManager x:Name="dockManager">
-            <DockingManager.Theme>
-                <ArcDarkTheme/>
-            </DockingManager.Theme>
-            <DockingManager.DocumentHeaderTemplate>
-                <DataTemplate>
-                    <Border Margin="5,5,5,5">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="16" Height="16" Margin="0,0,4,0" Source="{Binding IconSource}">
-                                <Image.Style>
-                                    <Style TargetType="Image">
-                                        <Style.Triggers>
-                                            <Trigger Property="Source" Value="{x:Null}">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Image.Style>
-                            </Image>
-                            <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </DockingManager.DocumentHeaderTemplate>
-            <ad:DockingManager.Layout>
-                <layout:LayoutRoot xmlns="http://schemas.datacontract.org/2004/07/AvalonDock.Layout">
+            <!-- Toolbox fixe -->
+            <ad:DockingManager Grid.Column="1" x:Name="dockManager">
+                <DockingManager.Theme>
+                    <ArcDarkTheme/>
+                </DockingManager.Theme>
 
-                    <layout:LayoutPanel Orientation="Horizontal">
+                <DockingManager.DocumentHeaderTemplate>
+                    <DataTemplate>
+                        <Border Margin="5,5,5,5">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16" Margin="0,0,4,0" Source="{Binding IconSource}">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <Trigger Property="Source" Value="{x:Null}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <TextBlock Text="{Binding Title}"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </DockingManager.DocumentHeaderTemplate>
 
-                        <layout:LayoutAnchorablePane>
-                            <layout:LayoutAnchorable Title="Toolbox"/>
-                        </layout:LayoutAnchorablePane>
+                <ad:DockingManager.Layout>
+                    <layout:LayoutRoot xmlns="http://schemas.datacontract.org/2004/07/AvalonDock.Layout">
+                        <layout:LayoutPanel Orientation="Horizontal">
+                            <layout:LayoutDocumentPane x:Name="DocumentPane" />
+                            <layout:LayoutAnchorablePane DockWidth="300">
+                                <layout:LayoutAnchorable Title="Document">
+                                    <documentviews:DocumentTreeview/>
+                                </layout:LayoutAnchorable>
 
-                        <layout:LayoutDocumentPane x:Name="DocumentPane">
-                            <!--<layout:LayoutDocument Title="Document"/>
-                            <layout:LayoutDocument Title="Document 2"/>-->
-                        </layout:LayoutDocumentPane>
-                        <!-- Right pane -->
-                        <layout:LayoutAnchorablePane DockWidth="300">
+                                <layout:LayoutAnchorable Title="Properties"/>
+                                <layout:LayoutAnchorable Title="Assets"/>
+                            </layout:LayoutAnchorablePane>
 
-                            <layout:LayoutAnchorable Title="Document">
-                                <documentviews:DocumentTreeview/>
-                            </layout:LayoutAnchorable>
-
-                            <layout:LayoutAnchorable Title="Properties"/>
-
-                            <layout:LayoutAnchorable Title="Assets"/>
-
-                        </layout:LayoutAnchorablePane>
-                    </layout:LayoutPanel>
-                </layout:LayoutRoot>
-            </ad:DockingManager.Layout>
-        </ad:DockingManager>
+                        </layout:LayoutPanel>
+                    </layout:LayoutRoot>
+                </ad:DockingManager.Layout>
+            </ad:DockingManager>
     </DockPanel>
+      
 </Fluent:RibbonWindow>
