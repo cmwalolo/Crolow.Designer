@@ -6,22 +6,24 @@ using Crolow.Designer.UI;
 
 namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
 
-public sealed record NodeActivatedEvent : IEvent<DocumentController, SceneNode>
+public sealed record NodeEvent : IEvent<DocumentController, SceneNode>
 {
-    public NodeActivatedEvent(DocumentController session, bool newlyCreated, List<SceneNode> nodes)
+    public NodeEvent(EventAction action, DocumentController session, bool newlyCreated, List<SceneNode> nodes)
     {
-        ReferenceId = GuidSources.Documents.GenerateGuid();
+        ReferenceId = session.Session.Document.Id;
         Source = session;
         Target = nodes;
         NewlyCreated = newlyCreated;
+        EventAction = action;
     }
 
-    public NodeActivatedEvent(DocumentController session, bool newlyCreated, SceneNode node)
+    public NodeEvent(EventAction action, DocumentController session, bool newlyCreated, SceneNode node)
     {
         ReferenceId = GuidSources.Documents.GenerateGuid();
         Source = session;
         Target = new List<SceneNode> { node };
         NewlyCreated = newlyCreated;
+        EventAction = action;
     }
 
     public Guid ReferenceId { get; }

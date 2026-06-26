@@ -6,8 +6,6 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Even
 
 public sealed record DocumentEvent : IEvent<DocumentSessionManager, DocumentSession>
 {
-    DocumentSessionManager mm;
-    DocumentSession dd;
 
     public DocumentEvent(DocumentSessionManager session, List<DocumentSession> documents)
     {

@@ -31,7 +31,8 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule
                 Canvas = currentSelectionArea
             };
 
-            var result = await Runtime.Commands.ExecuteAsync(new CreateSceneNodeCommand(activeNode, rectangle));
+            var command = new CreateSceneNodeCommand(Document.Id, activeNode, rectangle);
+            var result = await Runtime.Commands.ExecuteAsync(command);
 
         }
     }

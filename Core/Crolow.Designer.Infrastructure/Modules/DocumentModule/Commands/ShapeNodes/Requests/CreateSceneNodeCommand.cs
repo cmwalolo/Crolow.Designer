@@ -5,11 +5,13 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Shapes.Request
 
 public sealed record CreateSceneNodeCommand : ICommandParameter<GroupNode, SceneNode, SceneNode>
 {
-    public CreateSceneNodeCommand(GroupNode parent, SceneNode request)
+    public CreateSceneNodeCommand(Guid refId, GroupNode parent, SceneNode request)
     {
+        ReferenceId = refId;
         Initiator = parent;
         Request = request;
     }
     public GroupNode Initiator { get; set; }
     public SceneNode Request { get; set; }
+    public Guid ReferenceId { get; set; }
 }

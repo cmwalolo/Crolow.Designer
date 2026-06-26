@@ -5,13 +5,14 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers.Request
 
 public sealed record CreateGroupNodeCommand : ICommandParameter<GroupNode, GroupNode, GroupNode>
 {
-    public CreateGroupNodeCommand(GroupNode parentNode, GroupNode requestNode)
+    public CreateGroupNodeCommand(Guid refId, GroupNode parentNode, GroupNode requestNode)
     {
         Initiator = parentNode;
         Request = requestNode;
-
+        ReferenceId = refId;
     }
 
     public GroupNode Initiator { get; set; }
     public GroupNode Request { get; set; }
+    public Guid ReferenceId { get; set; }
 }

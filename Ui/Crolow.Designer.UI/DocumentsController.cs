@@ -13,7 +13,7 @@ namespace Crolow.Designer.UI
         public DocumentController ActiveDocument { get; set; }
         public List<DocumentController> OpenDocuments { get; set; } = new List<DocumentController>();
         public RuntimeController RuntimeController { get; set; }
-        public SelectionRegistry Selections { get; set; }
+        public SelectionContainer Selections { get; set; }
 
 
         protected DesignerRuntime runtime;
@@ -23,7 +23,7 @@ namespace Crolow.Designer.UI
         {
             RuntimeController = runtimeController;
             Controller = this;
-            Selections = new SelectionRegistry();
+            Selections = new SelectionContainer();
 
             runtime = RuntimeController.Runtime;
             documentSubscription = RuntimeController.Runtime.Events

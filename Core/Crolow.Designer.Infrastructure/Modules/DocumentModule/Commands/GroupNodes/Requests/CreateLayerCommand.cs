@@ -6,12 +6,14 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers.Request
 
 public sealed record CreateLayerCommand : ICommandParameter<DesignDocument, PageNode, PageNode>
 {
-    public CreateLayerCommand(DesignDocument document, PageNode layer)
+    public CreateLayerCommand(Guid refId, DesignDocument document, PageNode layer)
     {
+        ReferenceId = refId;
         Initiator = document;
         Request = layer;
     }
 
     public DesignDocument Initiator { get; set; }
     public PageNode Request { get; set; }
+    public Guid ReferenceId { get; set; }
 }

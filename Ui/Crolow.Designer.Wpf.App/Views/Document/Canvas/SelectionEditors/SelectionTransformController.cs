@@ -120,6 +120,7 @@ public class SelectionTransformController : Control
     private Point _selectionCenter;
     private Vector _rotationStartVector;
     private float _dragStartAspectRatio = 1f;
+    private SelectionTransformChangedEventArgs changingEventArgs = new();
 
     #endregion
 
@@ -178,6 +179,8 @@ public class SelectionTransformController : Control
     protected override void OnMouseDown(MouseButtonEventArgs e)
     {
         base.OnMouseDown(e);
+
+        changingEventArgs.InitSelection = Selection;
 
         if (e.ChangedButton != MouseButton.Left)
             return;
@@ -256,8 +259,9 @@ public class SelectionTransformController : Control
 
         if (_dragMode != DragMode.None)
         {
-            var args = new SelectionTransformChangedEventArgs(Selection, Rotation);
-            IsChanged?.Invoke(this, args);
+            changingEventArgs.Selection = Selection;
+            changingEventArgs.Rotation = Rotation;
+            IsChanged?.Invoke(this, changingEventArgs);
         }
 
         _dragMode = DragMode.None;
@@ -558,7 +562,10 @@ public class SelectionTransformController : Control
 
     private void RaiseIsChanging()
     {
-        IsChanging?.Invoke(this, new SelectionTransformChangedEventArgs(Selection, Rotation));
+        changingEventArgs.Selection = Selection;
+        changingEventArgs.Rotation = Rotation;
+
+        IsChanging?.Invoke(this, changingEventArgs);
         InvalidateVisual();
     }
 

@@ -5,11 +5,14 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Requ
 
 public sealed record CreateDocumentCommand : ICommandParameter<DocumentSessionManager, DesignDocument, DocumentSession>
 {
-    public CreateDocumentCommand(DocumentSessionManager session, DesignDocument document)
+    public CreateDocumentCommand(Guid refId, DocumentSessionManager session, DesignDocument document)
     {
+        ReferenceId = refId;
         Initiator = session;
         Request = document;
     }
     public DocumentSessionManager Initiator { get; set; }
     public DesignDocument Request { get; set; }
+
+    public Guid ReferenceId { get; set; }
 }

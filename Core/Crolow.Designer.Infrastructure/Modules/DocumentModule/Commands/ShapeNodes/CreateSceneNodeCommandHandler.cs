@@ -1,6 +1,4 @@
-﻿using Crolow.Designer.Common.Constants;
-using Crolow.Designer.Common.Extensions;
-using Crolow.Designer.Common.Runtime;
+﻿using Crolow.Designer.Common.Runtime;
 using Crolow.Designer.Core.Scene.Nodes;
 using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Application.Commands;
@@ -26,7 +24,7 @@ public sealed class CreateSceneNodeCommandHandler : ICommandHandler<CreateSceneN
         command.Request.ParentNode = command.Initiator;
         command.Request.Position = command.Initiator.Children.Max(p => p.Position) + 1;
 
-        _runtime.Events.PublishAsync(GuidSources.Document.GenerateGuid(), new SceneNodeEvent(command.Initiator, command.Request));
+        _runtime.Events.PublishAsync(command.ReferenceId, new SceneNodeEvent(command.ReferenceId, command.Initiator, command.Request));
 
         return new CommandResult<SceneNode>
         {

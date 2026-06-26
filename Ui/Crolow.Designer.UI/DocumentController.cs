@@ -1,4 +1,6 @@
 ﻿using Crolow.Designer.Common.Constants;
+using Crolow.Designer.Core.Extensions;
+using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Scene.Nodes;
 using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Application.Sessions.Selections;
@@ -17,7 +19,7 @@ namespace Crolow.Designer.UI
         private readonly IDisposable documentSubscription;
 
         public DocumentSession Session { get; set; }
-        public SelectionRegistry Selections { get; set; } = new SelectionRegistry();
+        public SelectionContainer Selections { get; set; } = new();
         public PageNode ActivePage { get; set; }
         public LayerNode? ActiveLayer { get; set; }
         public SceneNode? ActiveNode { get; set; }
@@ -25,6 +27,7 @@ namespace Crolow.Designer.UI
 
         public DocumentController(DocumentSession session)
         {
+            this.runtime = session.Runtime;
             this.Session = session;
             this.ActivePage = session.Document.Pages.FirstOrDefault();
             this.ActiveLayer = this.ActivePage.Children.FirstOrDefault() as LayerNode;
@@ -45,10 +48,10 @@ namespace Crolow.Designer.UI
                         {
                             ActiveNode = e.Target.FirstOrDefault();
                         }
-                        await runtime.Events.PublishAsync(Session.Document.Id, new NodeActivatedEvent(this, true, ActiveNode));
+                        Selections.Set(e.Target);
+                        await runtime.Events.PublishAsync(Session.Document.Id, new NodeEvent(EventAction.ObjectCreated, this, true, ActiveNode));
                     }
                     break;
-
                 case EventAction.ObjectDeleted:
                     Console.WriteLine("We are closing a document");
                     break;
@@ -63,6 +66,31 @@ namespace Crolow.Designer.UI
         {
             GroupNode pNode = ActiveNode is GroupNode ? ActiveNode as GroupNode : ActiveLayer;
             Session.CreateRectangle(pNode, settings.CurrentSelectionArea);
+        }
+
+        public void GetSelectionArea()
+        {
+            var nodes = Selections.Objects.Values.ToList();
+            Rect2D rectSelection = new();
+
+            if (Selections.Objects.Any())
+            {
+                if (Selections.Objects.Count == 1)
+                {
+                    var n = ((SceneNode)nodes.First());
+                    rectSelection = n.Canvas;
+                }
+                else
+                {
+                    foreach (var node in Selections.Objects.Values)
+                    {
+                        if (node is SceneNode sceneNode)
+                        {
+                            rectSelection = rectSelection.AddSelection(sceneNode.Canvas);
+                        }
+                    }
+                }
+            }
         }
     }
 }

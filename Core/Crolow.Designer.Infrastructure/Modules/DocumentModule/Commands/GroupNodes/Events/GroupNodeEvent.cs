@@ -4,20 +4,20 @@ using Crolow.Designer.Core.Scene.Nodes;
 
 namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.GroupNodes.Events;
 
-public sealed record SceneNodeEvent : IEvent<GroupNode, SceneNode>
+public sealed record GroupNodeEvent : IEvent<GroupNode, SceneNode>
 {
-    public SceneNodeEvent(Guid refId, GroupNode source, List<SceneNode> target)
+    public GroupNodeEvent(Guid refId, GroupNode parent, List<SceneNode> node)
     {
         ReferenceId = refId;
-        Source = source;
-        Target = target;
+        Source = parent;
+        Target = node;
     }
 
-    public SceneNodeEvent(Guid refId, GroupNode source, SceneNode target)
+    public GroupNodeEvent(Guid refId, GroupNode parent, SceneNode document)
     {
         ReferenceId = refId;
-        Source = source;
-        Target = new List<SceneNode> { target };
+        Source = parent;
+        Target = new List<SceneNode> { document };
     }
 
     public Guid ReferenceId { get; }

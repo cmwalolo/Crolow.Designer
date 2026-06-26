@@ -1,4 +1,6 @@
-﻿using Crolow.Designer.Core.Document;
+﻿using Crolow.Designer.Common.Constants;
+using Crolow.Designer.Common.Extensions;
+using Crolow.Designer.Core.Document;
 using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Requests;
 
@@ -17,7 +19,7 @@ public sealed class DocumentSessionManager
     public async Task<DocumentSession> CreateDocument(DesignDocument document)
     {
         var result =
-             await Runtime.Commands.ExecuteAsync(new CreateDocumentCommand(this, document));
+             await Runtime.Commands.ExecuteAsync(new CreateDocumentCommand(document.Id, this, document));
 
         if (result.ResponseCode == 0)
         {
@@ -34,7 +36,7 @@ public sealed class DocumentSessionManager
     public async Task<DocumentSession> OpenDocument(string documentPath)
     {
         var result =
-             await Runtime.Commands.ExecuteAsync(new OpenDocumentCommand(this, documentPath));
+             await Runtime.Commands.ExecuteAsync(new OpenDocumentCommand(GuidSources.Documents.GenerateGuid(), this, documentPath));
 
         if (result.ResponseCode == 0)
         {

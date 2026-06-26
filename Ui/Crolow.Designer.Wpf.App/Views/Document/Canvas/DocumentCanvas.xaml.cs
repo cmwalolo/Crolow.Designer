@@ -1,4 +1,5 @@
 ﻿using Crolow.Designer.Core.Geometry;
+using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
 using Crolow.Designer.UI;
 using Crolow.Designer.UI.Enumerations;
 using Crolow.Designer.UI.Utils;
@@ -43,6 +44,8 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
         // Holds information about the current documentSettings
         public DesignDocumentSettings documentSettings { get; set; } = new DesignDocumentSettings();
         private DocumentController documentController;
+        private IDisposable documentSubscription;
+        private IDisposable nodesSubscription;
 
         public DocumentCanvas(DocumentController documentController)
         {
@@ -55,6 +58,31 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
             documentSettings.Document = documentController.Session.Document;
             documentSettings.CurrentPage = documentController.ActivePage;
             Loaded += DocumentCanvas_Loaded;
+
+            nodesSubscription = RuntimeController.Runtime.Events
+                    .Subscribe<NodeEvent>(documentController.Session.Document.Id, OnSceneNodeEvent);
+        }
+
+        #region Controller Events
+
+        private async Task OnSceneNodeEvent(NodeEvent args)
+        {
+            switch (args.EventAction)
+            {
+                case Common.Constants.EventAction.ObjectCreated:
+                    CreateEditor();
+                    break;
+            }
+        }
+        #endregion 
+
+        private void CreateEditor()
+        {
+            documentController.GetSelectionArea();
+            SelectionController.Visibility = Visibility.Visible;
+            SelectionController.Selection = canvasSettings.CurentSelectionArea.ToRect2D();
+            SelectionController.Rotation = 0;
+            documentController.CurrentToolboxTool = ToolboxTool.None;
         }
 
         private void DocumentCanvas_Loaded(object sender, RoutedEventArgs e)
@@ -188,11 +216,13 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                         // Create the drawing boundary
                         float[] intervals = new float[] { 10, 10 };
                         paint.PathEffect = SKPathEffect.CreateDash(intervals, 0);
+
+                        // Draw the rectangle to the active canvas surface
+                        canvas.DrawRect(rect, paint);
+                        paint.PathEffect?.Dispose();
+
                     }
 
-                    // Draw the rectangle to the active canvas surface
-                    canvas.DrawRect(rect, paint);
-                    paint.PathEffect?.Dispose();
                 }
             }
         }
@@ -217,7 +247,10 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
 
         public void Dispose()
         {
+            documentSubscription?.Dispose();
+            nodesSubscription?.Dispose();
         }
+
 
         private void ToggleButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -238,15 +271,12 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                     documentController.CreateRectangle(documentSettings);
                     break;
             }
-            SelectionController.Visibility = Visibility.Visible;
-            SelectionController.Selection = canvasSettings.CurentSelectionArea.ToRect2D();
-            SelectionController.Rotation = 0;
-            documentController.CurrentToolboxTool = ToolboxTool.None;
             ClearToolbox();
 
         }
 
         #endregion 
+
         #region Toolbox
         private void ClearToolbox()
         {
