@@ -10,11 +10,9 @@ public abstract class SceneNode : DataObject
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public List<string> Tags { get; set; } = new();
-
     public double Opacity { get; set; } = 1.0;
 
     public Rect2D Canvas { get; set; }
-
     public Transform2D Transform { get; set; } = new();
 
     public Appearance Appearance { get; set; } = new();

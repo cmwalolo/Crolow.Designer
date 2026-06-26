@@ -3,7 +3,7 @@ using Crolow.Designer.Common.Constants;
 using Crolow.Designer.Common.Extensions;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
 using Crolow.Designer.UI;
-using Crolow.Designer.Wpf.App.Views.Document;
+using Crolow.Designer.Wpf.App.Views.Document.Canvas;
 
 public sealed class DocumentDockController : IDisposable
 {

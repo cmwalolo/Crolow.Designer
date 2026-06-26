@@ -7,18 +7,16 @@ using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers.Requests;
 namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers;
 
 [CommandParameter(typeof(CreateGroupNodeCommand))]
-public sealed class CreateGroupNodeCommandHandler
-    : ICommandHandler<CreateGroupNodeCommand, GroupNode>
+public sealed class CreateGroupNodeCommandHandler : ICommandHandler<CreateGroupNodeCommand, GroupNode>
 {
     private readonly DesignerRuntime _runtime;
 
-    public CreateGroupNodeCommandHandler(
-        DesignerRuntime runtime)
+    public CreateGroupNodeCommandHandler(DesignerRuntime runtime)
     {
         _runtime = runtime;
     }
 
-    public async Task<ICommandResult<GroupNode>> ExecuteAsync(CreateGroupNodeCommand command)
+    public ICommandResult<GroupNode> Execute(CreateGroupNodeCommand command)
     {
         var node = new GroupNode { };
         command.Initiator.Children.Add(node);

@@ -2,6 +2,7 @@
 {
     public enum ToolboxTool
     {
+        None,
         SelectRectangle,
         Crop,
         Select,

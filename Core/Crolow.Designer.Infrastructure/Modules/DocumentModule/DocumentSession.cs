@@ -1,5 +1,9 @@
 ﻿using Crolow.Designer.Core.Document;
+using Crolow.Designer.Core.Geometry;
+using Crolow.Designer.Core.Scene.Nodes;
+using Crolow.Designer.Core.Scene.Nodes.Objects;
 using Crolow.Designer.Runtime.Application;
+using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Shapes.Requests;
 
 namespace Crolow.Designer.Runtime.Modules.DocumentModule
 {
@@ -15,6 +19,20 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule
             Manager = manager;
             Runtime = runtime;
             Document = document;
+        }
+
+        public async Task CreateRectangle(GroupNode activeNode, Rect2D currentSelectionArea)
+        {
+            var rectangle = new RectangleShape
+            {
+                Name = "new Rectangle",
+                ParentId = activeNode.Id,
+                ParentNode = activeNode,
+                Canvas = currentSelectionArea
+            };
+
+            var result = await Runtime.Commands.ExecuteAsync(new CreateSceneNodeCommand(activeNode, rectangle));
+
         }
     }
 }

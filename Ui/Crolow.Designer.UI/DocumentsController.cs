@@ -13,10 +13,10 @@ namespace Crolow.Designer.UI
         public DocumentController ActiveDocument { get; set; }
         public List<DocumentController> OpenDocuments { get; set; } = new List<DocumentController>();
         public RuntimeController RuntimeController { get; set; }
-
-        protected DesignerRuntime runtime { get; set; }
         public SelectionRegistry Selections { get; set; }
 
+
+        protected DesignerRuntime runtime;
         private readonly IDisposable documentSubscription;
 
         public DocumentsController(RuntimeController runtimeController)
@@ -43,7 +43,6 @@ namespace Crolow.Designer.UI
                         }
                         await runtime.Events.PublishAsync(GuidSources.Documents.GenerateGuid(), new DocumentActivatedEvent(this, true, ActiveDocument));
                     }
-
                     break;
 
                 case EventAction.ObjectDeleted:
@@ -56,9 +55,9 @@ namespace Crolow.Designer.UI
             }
         }
 
-        public async void NewDocument(DesignDocument document)
+        public void NewDocument(DesignDocument document)
         {
-            var result = await RuntimeController.Runtime.Documents.CreateDocument(document);
+            RuntimeController.Runtime.Documents.CreateDocument(document);
         }
 
         public void Dispose()

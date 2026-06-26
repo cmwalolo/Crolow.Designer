@@ -9,14 +9,14 @@ public sealed record SceneNodeEvent : IEvent<SceneNode, SceneNode>
 {
     public SceneNodeEvent(SceneNode source, List<SceneNode> target)
     {
-        ReferenceId = GuidSources.Documents.GenerateGuid();
+        ReferenceId = GuidSources.Document.GenerateGuid();
         Source = source;
         Target = target;
     }
 
     public SceneNodeEvent(SceneNode source, SceneNode target)
     {
-        ReferenceId = GuidSources.Documents.GenerateGuid();
+        ReferenceId = GuidSources.Document.GenerateGuid();
         Source = source;
         Target = new List<SceneNode> { target };
     }

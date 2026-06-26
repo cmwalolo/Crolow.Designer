@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Crolow.Designer.Wpf.App.Views.Document.Canvas.SelectionEditors">
 
     <SolidColorBrush x:Key="DialogBackgroundBrush" Color="#2B2B2B"/>
     <SolidColorBrush x:Key="DialogForegroundBrush" Color="White"/>
@@ -36,4 +37,11 @@
         <Setter Property="Padding" Value="20,6"/>
     </Style>
 
+    <Style TargetType="{x:Type controls:SelectionTransformController}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HandleSize" Value="10" />
+        <Setter Property="RotationHandleDistance" Value="24" />
+        <Setter Property="MinWidth" Value="4" />
+        <Setter Property="MinHeight" Value="4" />
+    </Style>
 </ResourceDictionary>

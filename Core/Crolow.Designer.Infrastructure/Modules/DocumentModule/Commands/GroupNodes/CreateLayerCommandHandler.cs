@@ -7,18 +7,16 @@ using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers.Requests;
 namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Layers;
 
 [CommandParameter(typeof(CreateLayerCommand))]
-public sealed class CreateLayerCommandHandler
-    : ICommandHandler<CreateLayerCommand, PageNode>
+public sealed class CreateLayerCommandHandler : ICommandHandler<CreateLayerCommand, PageNode>
 {
     private readonly DesignerRuntime _runtime;
 
-    public CreateLayerCommandHandler(
-        DesignerRuntime runtime)
+    public CreateLayerCommandHandler(DesignerRuntime runtime)
     {
         _runtime = runtime;
     }
 
-    public async Task<ICommandResult<PageNode>> ExecuteAsync(CreateLayerCommand command)
+    public ICommandResult<PageNode> Execute(CreateLayerCommand command)
     {
         var layer = new PageNode { };
         command.Initiator.Pages.Add(layer);

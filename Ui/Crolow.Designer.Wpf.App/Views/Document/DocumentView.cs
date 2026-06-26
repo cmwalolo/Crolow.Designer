@@ -1,6 +1,6 @@
 ﻿using AvalonDock.Layout;
 using Crolow.Designer.UI;
-using Crolow.Designer.Wpf.App.Views.Document;
+using Crolow.Designer.Wpf.App.Views.Document.Canvas;
 
 public class DocumentView
 {

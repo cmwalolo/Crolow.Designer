@@ -25,7 +25,7 @@ public sealed class CommandDispatcher
         dynamic handler =
             _handlers[command.GetType()];
 
-        return handler.ExecuteAsync((dynamic)command);
+        return handler.Execute((dynamic)command);
     }
 
     private void RegisterAssembly(Assembly assembly)

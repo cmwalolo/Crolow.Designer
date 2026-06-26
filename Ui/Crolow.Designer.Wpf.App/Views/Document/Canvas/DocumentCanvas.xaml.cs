@@ -1,6 +1,9 @@
 ﻿using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.UI;
+using Crolow.Designer.UI.Enumerations;
 using Crolow.Designer.UI.Utils;
+using Crolow.Designer.Wpf.App.Extensions;
+using Fluent;
 using SkiaSharp;
 using SkiaSharp.Views.Desktop;
 using System.Windows;
@@ -8,23 +11,43 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Crolow.Designer.Wpf.App.Views.Document
+namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
 {
+    public sealed class ToolboxButtonDefinition
+    {
+        public ToolboxTool Tool { get; init; }
+        public string SvgSource { get; init; } = string.Empty;
+    }
+
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
     public partial class DocumentCanvas : UserControl, IDisposable
     {
+        private static readonly ToolboxButtonDefinition[] ToolboxDefinitions =
+        [
+            new() { Tool = ToolboxTool.SelectRectangle, SvgSource = "/Resources/Svg/Documents/ui-select-2.svg" },
+            new() { Tool = ToolboxTool.Crop,            SvgSource = "/Resources/Svg/Documents/ui-crop.svg" },
+            new() { Tool = ToolboxTool.Rectangle,       SvgSource = "/Resources/Svg/Documents/shape-rectangle.svg" },
+            new() { Tool = ToolboxTool.Circle,          SvgSource = "/Resources/Svg/Documents/shape-circle.svg" },
+            new() { Tool = ToolboxTool.Path,            SvgSource = "/Resources/Svg/Documents/shape-path.svg" },
+            new() { Tool = ToolboxTool.Polygon,         SvgSource = "/Resources/Svg/Documents/shape-polygon.svg" },
+            new() { Tool = ToolboxTool.Text,            SvgSource = "/Resources/Svg/Documents/shape-text.svg" },
+            new() { Tool = ToolboxTool.DocumentRef,     SvgSource = "/Resources/Svg/Documents/ui-document-ref.svg" }
+        ];
+
+        private Fluent.ToggleButton[] toolboxButtons = Array.Empty<Fluent.ToggleButton>();
 
         // Holds information of the current Canvas layout and config
-        private CurrentCanvasSettings canvasSettings = new CurrentCanvasSettings();
+        public CurrentCanvasSettings canvasSettings { get; set; } = new CurrentCanvasSettings();
         // Holds information about the current documentSettings
-        private DesignDocumentSettings documentSettings = new DesignDocumentSettings();
+        public DesignDocumentSettings documentSettings { get; set; } = new DesignDocumentSettings();
         private DocumentController documentController;
 
         public DocumentCanvas(DocumentController documentController)
         {
             InitializeComponent();
+            LoadToolbox();
             this.documentController = documentController;
             var dpi = VisualTreeHelper.GetDpi(this);
             canvasSettings.ScaleX = (float)dpi.DpiScaleX;
@@ -67,7 +90,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         }
         #endregion
 
-        #region Overlay 
+        #region Overlay Mouse actions
         private void OnOverlayMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -111,21 +134,20 @@ namespace Crolow.Designer.Wpf.App.Views.Document
                 float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Top, canvasSettings.CurrentPoint.Y);
                 float right = (float)Math.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
                 float bottom = (float)Math.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
-                canvasSettings.CurentSelectionArea =
-                    new SKRect(left, top, right, bottom);
+                canvasSettings.CurentSelectionArea = new SKRect(left, top, right, bottom);
 
                 if (!canvasSettings.IsDragging &&
                         (canvasSettings.CurentSelectionArea.Width <= 4 || canvasSettings.CurentSelectionArea.Height <= 4))
                 {
                     canvasSettings.IsRectangleSelected = false;
                     SkOverlay.InvalidateVisual();
+                    ProcessSelection();
                     return;
                 }
                 canvasSettings.IsRectangleSelected = true;
-                documentSettings.CurrentSelectionArea = canvasSettings.ScaleToPixels(canvasSettings.CurentSelectionArea);
-
+                documentSettings.CurrentSelectionArea = canvasSettings.ScaleToPixels(canvasSettings.CurentSelectionArea, canvasSettings.CanvasArea.Left, canvasSettings.CanvasArea.Top);
                 SkOverlay.InvalidateVisual();
-
+                ProcessSelection();
             }
         }
 
@@ -192,17 +214,83 @@ namespace Crolow.Designer.Wpf.App.Views.Document
         }
 
         #endregion 
+
         public void Dispose()
         {
         }
 
         private void ToggleButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            var tb = sender as ToggleButton;
+            documentController.CurrentToolboxTool = (ToolboxTool)tb.Tag;
         }
         private void EditDocument_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        #region process Selection
+        private void ProcessSelection()
+        {
+            switch (documentController.CurrentToolboxTool)
+            {
+                case ToolboxTool.Rectangle:
+                    documentController.CreateRectangle(documentSettings);
+                    break;
+            }
+            SelectionController.Visibility = Visibility.Visible;
+            SelectionController.Selection = canvasSettings.CurentSelectionArea.ToRect2D();
+            SelectionController.Rotation = 0;
+            documentController.CurrentToolboxTool = ToolboxTool.None;
+            ClearToolbox();
+
+        }
+
+        #endregion 
+        #region Toolbox
+        private void ClearToolbox()
+        {
+            foreach (var button in toolboxButtons)
+            {
+                button.IsChecked = false;
+            }
+        }
+
+        private void LoadToolbox()
+        {
+            toolboxContainer.Items.Clear();
+
+            toolboxButtons = ToolboxDefinitions
+                .Select(def =>
+                {
+                    var button = new Fluent.ToggleButton
+                    {
+                        Tag = def.Tool,
+                        GroupName = "ToolboxTools",
+                        Padding = new Thickness(0),
+                        Margin = new Thickness(0),
+                        Width = 34,
+                        Height = 34
+                    };
+
+                    button.Click += ToggleButton_Click;
+
+                    var svg = new SharpVectors.Converters.SvgViewbox
+                    {
+                        Source = new Uri(def.SvgSource, UriKind.Relative)
+                    };
+
+                    button.Icon = new Viewbox
+                    {
+                        Width = 12,
+                        Height = 12,
+                        Child = svg
+                    };
+
+                    toolboxContainer.Items.Add(button);
+                    return button;
+                }).ToArray();
+        }
+        #endregion 
     }
 }

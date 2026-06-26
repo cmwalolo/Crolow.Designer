@@ -12,20 +12,15 @@ namespace Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents;
 
 
 [CommandParameter(typeof(CreateDocumentCommand))]
-public sealed class CreateDocumentCommandHandler
-    : ICommandHandler<CreateDocumentCommand, DocumentSession>
+public sealed class CreateDocumentCommandHandler : ICommandHandler<CreateDocumentCommand, DocumentSession>
 {
-    private readonly DesignerRuntime _runtime;
+    private readonly DesignerRuntime runtime;
 
-    public CreateDocumentCommandHandler(
-        DesignerRuntime runtime)
+    public CreateDocumentCommandHandler(DesignerRuntime runtime)
     {
-        _runtime = runtime;
+        this.runtime = runtime;
     }
-
-    public async Task<ICommandResult<DocumentSession>>
-        ExecuteAsync(
-            CreateDocumentCommand command)
+    public ICommandResult<DocumentSession> Execute(CreateDocumentCommand command)
     {
 
         var p = new PageNode
@@ -47,10 +42,10 @@ public sealed class CreateDocumentCommandHandler
 
         command.Request.ApplyParents();
 
-        var session = new DocumentSession(command.Initiator, _runtime, command.Request);
+        var session = new DocumentSession(command.Initiator, runtime, command.Request);
         command.Initiator.Documents.Add(session);
 
-        await _runtime.Events.PublishAsync(GuidSources.Documents.GenerateGuid(), new DocumentEvent(_runtime.Documents, session));
+        runtime.Events.PublishAsync(GuidSources.Documents.GenerateGuid(), new DocumentEvent(runtime.Documents, session));
 
         return new CommandResult<DocumentSession>
         {

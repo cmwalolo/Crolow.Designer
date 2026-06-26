@@ -2,5 +2,5 @@
 
 public interface ICommandHandler<TCommand, TResult>
 {
-    Task<ICommandResult<TResult>> ExecuteAsync(TCommand command);
+    ICommandResult<TResult> Execute(TCommand command);
 }
