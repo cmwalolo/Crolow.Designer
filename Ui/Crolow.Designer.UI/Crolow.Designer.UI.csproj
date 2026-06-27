@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="3.119.4" />
+    <PackageReference Include="SkiaSharp" Version="4.148.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Crolow.Designer.Infrastructure\Crolow.Designer.Runtime.csproj" />
+    <ProjectReference Include="..\..\Graphics\Crolow.Designer.Graphics.Core\Crolow.Designer.Graphics.Core.csproj" />
   </ItemGroup>
 
 </Project>

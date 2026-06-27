@@ -1,5 +1,5 @@
-﻿using Crolow.Designer.Core.Scene.Nodes;
-using SkiaSharp;
+﻿using Crolow.Designer.Core.Geometry;
+using Crolow.Designer.Core.Scene.Nodes;
 
 namespace Crolow.Designer.UI.Interfaces
 {
@@ -13,7 +13,7 @@ namespace Crolow.Designer.UI.Interfaces
     {
         public SceneNode Node { get; set; }
         public SelectionType SelectionType { get; set; }
-        public SKRect Selection { get; set; }
+        public Rect2D Selection { get; set; }
     }
 
     public interface ICanvasUI

@@ -1,4 +1,6 @@
 ﻿using Crolow.Designer.Core.Geometry;
+using Crolow.Designer.Core.Transforms;
+using Crolow.Designer.Graphics.Core.UISettings;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,19 +24,19 @@ public class SelectionTransformController : Control
     }
 
     #region Dependency Properties
-
-    public static readonly DependencyProperty SelectionProperty =
+    public static readonly DependencyProperty CanvasSettingsProperty =
         DependencyProperty.Register(
-            nameof(Selection),
-            typeof(Rect2D),
+            nameof(CanvasSettings),
+            typeof(CurrentCanvasSettings),
             typeof(SelectionTransformController),
-            new FrameworkPropertyMetadata(default(Rect2D), FrameworkPropertyMetadataOptions.AffectsRender));
+            new FrameworkPropertyMetadata(default(CurrentCanvasSettings), FrameworkPropertyMetadataOptions.AffectsRender));
 
-    public Rect2D Selection
+    public CurrentCanvasSettings CanvasSettings
     {
-        get => (Rect2D)GetValue(SelectionProperty);
-        set => SetValue(SelectionProperty, value);
+        get => (CurrentCanvasSettings)GetValue(CanvasSettingsProperty);
+        set => SetValue(CanvasSettingsProperty, value);
     }
+
 
     public static readonly DependencyProperty RotationProperty =
         DependencyProperty.Register(
@@ -82,8 +84,8 @@ public class SelectionTransformController : Control
 
     #region Events
 
-    public event EventHandler<SelectionTransformChangedEventArgs>? IsChanging;
-    public event EventHandler<SelectionTransformChangedEventArgs>? IsChanged;
+    public event EventHandler<TransformContent>? IsChanging;
+    public event EventHandler<TransformContent>? IsChanged;
 
     #endregion
 
@@ -108,8 +110,12 @@ public class SelectionTransformController : Control
                 (float)r.Height + HandleSize + topExtra);
         }
     }
-
     #endregion
+    #region public
+    public Rect2D Selection { get; set; }
+
+    #endregion 
+
 
     #region Interaction State
 
@@ -120,7 +126,7 @@ public class SelectionTransformController : Control
     private Point _selectionCenter;
     private Vector _rotationStartVector;
     private float _dragStartAspectRatio = 1f;
-    private SelectionTransformChangedEventArgs changingEventArgs = new();
+    private TransformContent changingEventArgs = new();
 
     #endregion
 
@@ -259,9 +265,7 @@ public class SelectionTransformController : Control
 
         if (_dragMode != DragMode.None)
         {
-            changingEventArgs.Selection = Selection;
-            changingEventArgs.Rotation = Rotation;
-            IsChanged?.Invoke(this, changingEventArgs);
+            RaiseIsChanged();
         }
 
         _dragMode = DragMode.None;
@@ -560,15 +564,6 @@ public class SelectionTransformController : Control
         return matrix.Transform(p);
     }
 
-    private void RaiseIsChanging()
-    {
-        changingEventArgs.Selection = Selection;
-        changingEventArgs.Rotation = Rotation;
-
-        IsChanging?.Invoke(this, changingEventArgs);
-        InvalidateVisual();
-    }
-
     private static float NormalizeAngle(float angle)
     {
         angle %= 360.0f;
@@ -579,6 +574,47 @@ public class SelectionTransformController : Control
 
     #endregion
 
+    #region Events
+    private void RaiseIsChanging()
+    {
+        changingEventArgs.Selection = Selection;
+        changingEventArgs.Rotation = Rotation;
+        ApplyModifications(changingEventArgs);
+        IsChanging?.Invoke(this, changingEventArgs);
+        InvalidateVisual();
+    }
+
+    private void RaiseIsChanged()
+    {
+        changingEventArgs.Selection = Selection;
+        changingEventArgs.Rotation = Rotation;
+        ApplyModifications(changingEventArgs);
+        IsChanging?.Invoke(this, changingEventArgs);
+        InvalidateVisual();
+    }
+
+    private void ApplyModifications(TransformContent changingEventArgs)
+    {
+        var initSelection = changingEventArgs.InitSelection;
+        var selection = changingEventArgs.Selection;
+
+        float scaleX = selection.Width / initSelection.Width;
+        float scaleY = selection.Height / initSelection.Height;
+
+        var initPosX = initSelection.X + (initSelection.Width * 0.5f);
+        var initPosY = initSelection.Y + (initSelection.Height * 0.5f);
+
+        var posX = selection.X + (selection.Width * 0.5f);
+        var posY = selection.Y + (selection.Height * 0.5f);
+
+        changingEventArgs.InitCenter = new Point2D(initPosX, initPosY);
+        changingEventArgs.Center = new Point2D(posX, posY);
+
+        changingEventArgs.Offset = new Point2D(posX - initPosX, posY - initPosY);
+        changingEventArgs.Scale = new Point2D(scaleX, scaleY);
+    }
+
+    #endregion
     #region Internal Enums
 
     private enum HandleKind

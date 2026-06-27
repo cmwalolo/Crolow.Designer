@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Crolow.Designer.Abstractions\Crolow.Designer.Common.csproj" />
+    <ProjectReference Include="..\..\Core\Crolow.Designer.Core\Crolow.Designer.Core.csproj" />
+    <ProjectReference Include="..\..\Core\Crolow.Designer.Infrastructure\Crolow.Designer.Runtime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="4.148.0" />
+  </ItemGroup>
+
+</Project>

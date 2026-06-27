@@ -1,6 +1,6 @@
-﻿using SkiaSharp;
+﻿using Crolow.Designer.Core.Geometry;
 
-namespace Crolow.Designer.UI.Utils
+namespace Crolow.Designer.Graphics.Core.UISettings
 {
     public class CurrentCanvasSettings
     {
@@ -8,10 +8,10 @@ namespace Crolow.Designer.UI.Utils
         public bool IsDrawing = false;
         public bool IsSelected = false;
         public bool IsRectangleSelected = false;
-        public SKPoint CurrentPoint;
-        public SKRect CurentSelectionArea;
+        public Point2D CurrentPoint;
+        public Rect2D CurentSelectionArea;
         public float ZoomFactor = 1f;
-        public SKRect CanvasArea;
+        public Rect2D CanvasArea;
         public float ScaleX;
         public float ScaleY;
     }

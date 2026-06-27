@@ -27,6 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{DB765BDC-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Data", "Data\Crolow.Designer.Data\Crolow.Designer.Data.csproj", "{9BBD50BD-D430-4ED7-BD90-2B856BAE3387}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Graphics", "Graphics", "{30D91D3F-3977-46F1-8268-2DF80BC34D52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crolow.Designer.Graphics.Core", "Graphics\Crolow.Designer.Graphics.Core\Crolow.Designer.Graphics.Core.csproj", "{6C8D1E24-5B04-4376-B0C4-6D33D01E9A04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +69,10 @@ Global
 		{9BBD50BD-D430-4ED7-BD90-2B856BAE3387}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BBD50BD-D430-4ED7-BD90-2B856BAE3387}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BBD50BD-D430-4ED7-BD90-2B856BAE3387}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8D1E24-5B04-4376-B0C4-6D33D01E9A04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8D1E24-5B04-4376-B0C4-6D33D01E9A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8D1E24-5B04-4376-B0C4-6D33D01E9A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8D1E24-5B04-4376-B0C4-6D33D01E9A04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +86,7 @@ Global
 		{EDCEE3D0-5224-CFAF-B9BB-29DDAC3834A2} = {B2EFA226-055B-46C6-84CD-EFDF6859FB0F}
 		{34F84F3F-78FC-1741-BE83-90EC5E04949E} = {598F2E1C-29C8-4EBD-BB06-AF15C9D0734B}
 		{9BBD50BD-D430-4ED7-BD90-2B856BAE3387} = {DB765BDC-6D9D-477E-BB5A-D866A06B738A}
+		{6C8D1E24-5B04-4376-B0C4-6D33D01E9A04} = {30D91D3F-3977-46F1-8268-2DF80BC34D52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {193A9158-6FD2-48A0-9B89-5D954B3EFBC9}

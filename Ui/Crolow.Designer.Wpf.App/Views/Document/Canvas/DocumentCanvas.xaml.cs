@@ -1,8 +1,9 @@
 ﻿using Crolow.Designer.Core.Geometry;
+using Crolow.Designer.Graphics.Core.Extensions;
+using Crolow.Designer.Graphics.Core.UISettings;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
 using Crolow.Designer.UI;
 using Crolow.Designer.UI.Enumerations;
-using Crolow.Designer.UI.Utils;
 using Crolow.Designer.Wpf.App.Extensions;
 using Fluent;
 using SkiaSharp;
@@ -80,8 +81,10 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
         {
             documentController.GetSelectionArea();
             SelectionController.Visibility = Visibility.Visible;
-            SelectionController.Selection = canvasSettings.CurentSelectionArea.ToRect2D();
+            SelectionController.CanvasSettings = canvasSettings;
+            SelectionController.Selection = canvasSettings.CurentSelectionArea;
             SelectionController.Rotation = 0;
+            SelectionController.InvalidateVisual();
             documentController.CurrentToolboxTool = ToolboxTool.None;
         }
 
@@ -94,7 +97,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
         public void SetCanvasToFitOrFill()
         {
             var doc = documentSettings.CurrentPage;
-            SKRect docRect = canvasSettings.ScaleToDpi(new Rect2D(0, 0, doc.Size.Width, doc.Size.Height));
+            Rect2D docRect = canvasSettings.ScaleToDpi(new Rect2D(0, 0, doc.Size.Width, doc.Size.Height));
 
             // -100 is to leave a margin in the SkOverlay to draw the document area
             float scaleX = ((float)SkOverlay.ActualWidth - 100) / docRect.Width;
@@ -109,10 +112,8 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
             }
             float x = ((float)SkOverlay.ActualWidth - docRect.Width) / 2;
             float y = ((float)SkOverlay.ActualHeight - docRect.Height) / 2;
-            docRect.Left += x;
-            docRect.Right += x;
-            docRect.Top += y;
-            docRect.Bottom += y;
+            docRect.X += x;
+            docRect.Y += y;
             canvasSettings.CanvasArea = docRect;
             SkCanvas.InvalidateVisual();
         }
@@ -128,12 +129,11 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                 canvasSettings.IsDrawing = true;
 
                 var p = e.GetPosition(SkOverlay);
-                canvasSettings.CurrentPoint = new SKPoint((float)p.X, (float)p.Y);
-                canvasSettings.CurentSelectionArea.Left = (float)p.X;
-                canvasSettings.CurentSelectionArea.Top = (float)p.Y;
-                canvasSettings.CurentSelectionArea.Right = (float)p.X;
-                canvasSettings.CurentSelectionArea.Bottom = (float)p.Y;
-                // Capture the mouse to track movement even if it leaves the element bounds
+                canvasSettings.CurrentPoint = new Point2D((float)p.X, (float)p.Y);
+                canvasSettings.CurentSelectionArea.X = (float)p.X;
+                canvasSettings.CurentSelectionArea.Y = (float)p.Y;
+                canvasSettings.CurentSelectionArea.Width = 1f;
+                canvasSettings.CurentSelectionArea.Height = 1f;
                 SkOverlay.CaptureMouse();
             }
         }
@@ -143,7 +143,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
             if (canvasSettings.IsDrawing)
             {
                 var p = e.GetPosition(SkOverlay);
-                canvasSettings.CurrentPoint = new SKPoint((float)p.X, (float)p.Y);
+                canvasSettings.CurrentPoint = new Point2D((float)p.X, (float)p.Y);
                 SkOverlay.InvalidateVisual();
             }
         }
@@ -158,11 +158,11 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
 
                 SkOverlay.ReleaseMouseCapture();
 
-                float left = (float)Math.Min(canvasSettings.CurentSelectionArea.Left, canvasSettings.CurrentPoint.X);
-                float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Top, canvasSettings.CurrentPoint.Y);
+                float left = (float)Math.Min(canvasSettings.CurentSelectionArea.X, canvasSettings.CurrentPoint.X);
+                float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Y, canvasSettings.CurrentPoint.Y);
                 float right = (float)Math.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
                 float bottom = (float)Math.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
-                canvasSettings.CurentSelectionArea = new SKRect(left, top, right, bottom);
+                canvasSettings.CurentSelectionArea = new Rect2D(left, top, right - left, bottom - top);
 
                 if (!canvasSettings.IsDragging &&
                         (canvasSettings.CurentSelectionArea.Width <= 4 || canvasSettings.CurentSelectionArea.Height <= 4))
@@ -173,7 +173,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                     return;
                 }
                 canvasSettings.IsRectangleSelected = true;
-                documentSettings.CurrentSelectionArea = canvasSettings.ScaleToPixels(canvasSettings.CurentSelectionArea, canvasSettings.CanvasArea.Left, canvasSettings.CanvasArea.Top);
+                documentSettings.CurrentSelectionArea = canvasSettings.ScaleToPixels(canvasSettings.CurentSelectionArea, canvasSettings.CanvasArea.X, canvasSettings.CanvasArea.Y);
                 SkOverlay.InvalidateVisual();
                 ProcessSelection();
             }
@@ -194,15 +194,15 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                     paint.Color = SKColors.Blue;
                     paint.StrokeWidth = 3;
 
-                    SKRect rect = canvasSettings.CurentSelectionArea;
+                    Rect2D rect = canvasSettings.CurentSelectionArea;
                     if (canvasSettings.IsDrawing)
                     {
                         // Calculate the standard coordinates (handles dragging in any direction)
-                        float left = (float)Math.Min(canvasSettings.CurentSelectionArea.Left, canvasSettings.CurrentPoint.X);
-                        float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Top, canvasSettings.CurrentPoint.Y);
+                        float left = (float)Math.Min(canvasSettings.CurentSelectionArea.X, canvasSettings.CurrentPoint.X);
+                        float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Y, canvasSettings.CurrentPoint.Y);
                         float right = (float)Math.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
                         float bottom = (float)Math.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
-                        rect = new SKRect(left, top, right, bottom);
+                        rect = new Rect2D(left, top, right - left, bottom - top);
 
                         if (!canvasSettings.IsDragging &&
                                 (rect.Width <= 4 || rect.Height <= 4))
@@ -218,9 +218,8 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                         paint.PathEffect = SKPathEffect.CreateDash(intervals, 0);
 
                         // Draw the rectangle to the active canvas surface
-                        canvas.DrawRect(rect, paint);
+                        canvas.DrawRect(rect.ToSkRect(), paint);
                         paint.PathEffect?.Dispose();
-
                     }
 
                 }
@@ -239,7 +238,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                 paint.IsAntialias = true;
                 paint.Style = SKPaintStyle.Fill;
                 paint.Color = SKColors.White;
-                canvas.DrawRect(canvasSettings.CanvasArea, paint);
+                canvas.DrawRect(canvasSettings.CanvasArea.ToSkRect(), paint);
             }
         }
 
@@ -321,6 +320,19 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                     return button;
                 }).ToArray();
         }
-        #endregion 
+        #endregion
+
+        private void SelectionController_IsChanged(object sender, Core.Transforms.TransformContent e)
+        {
+            float offsetX = canvasSettings.CanvasArea.X;
+            float offsetY = canvasSettings.CanvasArea.Y;
+
+            // documentSettings.CurrentSelectionArea = canvasSettings.ScaleToPixels(canvasSettings.CurentSelectionArea, canvasSettings.CanvasArea.X, canvasSettings.CanvasArea.Y);
+        }
+
+        private void SelectionController_IsChanging(object sender, Core.Transforms.TransformContent e)
+        {
+
+        }
     }
 }

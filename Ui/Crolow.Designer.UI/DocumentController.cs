@@ -2,13 +2,13 @@
 using Crolow.Designer.Core.Extensions;
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Scene.Nodes;
+using Crolow.Designer.Graphics.Core.UISettings;
 using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Application.Sessions.Selections;
 using Crolow.Designer.Runtime.Modules.DocumentModule;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.GroupNodes.Events;
 using Crolow.Designer.UI.Enumerations;
-using Crolow.Designer.UI.Utils;
 
 namespace Crolow.Designer.UI
 {

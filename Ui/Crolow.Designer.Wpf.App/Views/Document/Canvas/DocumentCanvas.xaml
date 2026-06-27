@@ -101,7 +101,7 @@
                         MouseUp="OnOverlayMouseUp"
                         IgnorePixelScaling="True"/>
                 <UserControl x:Name="editorContainer">
-                    <editors:SelectionTransformController Visibility="Hidden" x:Name="SelectionController"/>
+                    <editors:SelectionTransformController IsChanged="SelectionController_IsChanged" IsChanging="SelectionController_IsChanging"     Visibility="Hidden" x:Name="SelectionController"/>
                 </UserControl>
             </Grid>
         </Border>   

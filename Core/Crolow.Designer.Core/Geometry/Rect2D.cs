@@ -14,4 +14,7 @@ public struct Rect2D
     public float Y { get; set; }
     public float Width { get; set; }
     public float Height { get; set; }
+
+    public float Right { get { return X + Width; } }
+    public float Bottom { get { return Y + Height; } }
 }

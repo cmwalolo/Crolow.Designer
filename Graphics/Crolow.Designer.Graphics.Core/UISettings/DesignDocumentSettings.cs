@@ -2,7 +2,7 @@
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Scene.Nodes;
 
-namespace Crolow.Designer.UI.Utils
+namespace Crolow.Designer.Graphics.Core.UISettings
 {
     public class DesignDocumentSettings
     {
