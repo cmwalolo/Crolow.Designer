@@ -1,6 +1,7 @@
 using Crolow.Designer.Common.Data;
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Geometry.Paths;
+using Crolow.Designer.Core.Geometry.Radius;
 using Crolow.Designer.Core.Styling;
 
 namespace Crolow.Designer.Core.Scene.Nodes;
@@ -16,6 +17,8 @@ public abstract class SceneNode : DataObject
     public Appearance Appearance { get; set; } = new();
     public bool IsLocked { get; set; }
     public bool IsVisible { get; set; } = true;
+    public CornerRadiusValue DefaultCornerRadiusValue { get; set; } = new();
+    public bool UseDefaultCornerRadiusValue { get; set; } = true;
 
     public PathGeometry BasicPath { get; set; }
     public PathGeometry TransformedPath { get; }

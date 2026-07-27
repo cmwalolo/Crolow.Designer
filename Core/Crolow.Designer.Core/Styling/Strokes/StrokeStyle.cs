@@ -1,4 +1,5 @@
 using Crolow.Designer.Common.Data;
+using Crolow.Designer.Core.Geometry.Radius;
 using Crolow.Designer.Core.Styling.Brushes;
 using Crolow.Designer.Core.Styling.Strokes.Definitions;
 
@@ -21,5 +22,5 @@ public class StrokeStyle : DataObject
     public List<double>? DashPattern { get; set; }
 
     public double DashOffset { get; set; }
-    public CornerRadius CornerRadius { get; set; }
+    public CornerRadiusValue CornerRadius { get; set; }
 }

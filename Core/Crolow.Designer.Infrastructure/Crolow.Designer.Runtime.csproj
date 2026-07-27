@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Graphics\Crolow.Designer.Graphics.Core\Crolow.Designer.Graphics.Core.csproj" />
     <ProjectReference Include="..\Crolow.Designer.Abstractions\Crolow.Designer.Common.csproj" />
     <ProjectReference Include="..\Crolow.Designer.Core\Crolow.Designer.Core.csproj" />
   </ItemGroup>

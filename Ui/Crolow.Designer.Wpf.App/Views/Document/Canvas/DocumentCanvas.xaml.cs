@@ -1,4 +1,6 @@
 ﻿using Crolow.Designer.Core.Geometry;
+using Crolow.Designer.Core.Scene.Nodes;
+using Crolow.Designer.Core.Scene.Nodes.Objects;
 using Crolow.Designer.Graphics.Core.Extensions;
 using Crolow.Designer.Graphics.Core.UISettings;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;
@@ -19,6 +21,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
     {
         public ToolboxTool Tool { get; init; }
         public string SvgSource { get; init; } = string.Empty;
+        public Type TargetType { get; init; }
     }
 
     /// <summary>
@@ -30,12 +33,12 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
         [
             new() { Tool = ToolboxTool.SelectRectangle, SvgSource = "/Resources/Svg/Documents/ui-select-2.svg" },
             new() { Tool = ToolboxTool.Crop,            SvgSource = "/Resources/Svg/Documents/ui-crop.svg" },
-            new() { Tool = ToolboxTool.Rectangle,       SvgSource = "/Resources/Svg/Documents/shape-rectangle.svg" },
-            new() { Tool = ToolboxTool.Circle,          SvgSource = "/Resources/Svg/Documents/shape-circle.svg" },
-            new() { Tool = ToolboxTool.Path,            SvgSource = "/Resources/Svg/Documents/shape-path.svg" },
-            new() { Tool = ToolboxTool.Polygon,         SvgSource = "/Resources/Svg/Documents/shape-polygon.svg" },
-            new() { Tool = ToolboxTool.Text,            SvgSource = "/Resources/Svg/Documents/shape-text.svg" },
-            new() { Tool = ToolboxTool.DocumentRef,     SvgSource = "/Resources/Svg/Documents/ui-document-ref.svg" }
+            new() { Tool = ToolboxTool.Rectangle,       SvgSource = "/Resources/Svg/Documents/shape-rectangle.svg", TargetType = typeof(RectangleShape) },
+            new() { Tool = ToolboxTool.Circle,          SvgSource = "/Resources/Svg/Documents/shape-circle.svg", TargetType = typeof(EllipseShape) },
+            new() { Tool = ToolboxTool.Path,            SvgSource = "/Resources/Svg/Documents/shape-path.svg", TargetType = typeof(VectorNode) },
+            new() { Tool = ToolboxTool.Polygon,         SvgSource = "/Resources/Svg/Documents/shape-polygon.svg", TargetType = typeof(PolygonShape) },
+            new() { Tool = ToolboxTool.Text,            SvgSource = "/Resources/Svg/Documents/shape-text.svg", TargetType = typeof(TextShape) },
+            new() { Tool = ToolboxTool.DocumentRef,     SvgSource = "/Resources/Svg/Documents/ui-document-ref.svg", TargetType = typeof(DocumentNode) }
         ];
 
         private Fluent.ToggleButton[] toolboxButtons = Array.Empty<Fluent.ToggleButton>();
@@ -97,17 +100,18 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
         public void SetCanvasToFitOrFill()
         {
             var doc = documentSettings.CurrentPage;
+            canvasSettings.ZoomFactor = 1;
+
             Rect2D docRect = canvasSettings.ScaleToDpi(new Rect2D(0, 0, doc.Size.Width, doc.Size.Height));
 
             // -100 is to leave a margin in the SkOverlay to draw the document area
             float scaleX = ((float)SkOverlay.ActualWidth - 100) / docRect.Width;
             float scaleY = ((float)SkOverlay.ActualHeight - 100) / docRect.Height;
 
-            canvasSettings.ZoomFactor = 1;
-
             if (scaleX < 1 || scaleY < 1)
             {
-                canvasSettings.ZoomFactor = Math.Min(scaleX, scaleY);
+                canvasSettings.ZoomFactor = MathF.Min(scaleX, scaleY);
+                docRect = docRect.Scale(canvasSettings.ZoomFactor, canvasSettings.ZoomFactor, false, false);
                 docRect = canvasSettings.ScaleToDpi(new Rect2D(0, 0, doc.Size.Width, doc.Size.Height));
             }
             float x = ((float)SkOverlay.ActualWidth - docRect.Width) / 2;
@@ -158,10 +162,10 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
 
                 SkOverlay.ReleaseMouseCapture();
 
-                float left = (float)Math.Min(canvasSettings.CurentSelectionArea.X, canvasSettings.CurrentPoint.X);
-                float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Y, canvasSettings.CurrentPoint.Y);
-                float right = (float)Math.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
-                float bottom = (float)Math.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
+                float left = (float)MathF.Min(canvasSettings.CurentSelectionArea.X, canvasSettings.CurrentPoint.X);
+                float top = (float)MathF.Min(canvasSettings.CurentSelectionArea.Y, canvasSettings.CurrentPoint.Y);
+                float right = (float)MathF.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
+                float bottom = (float)MathF.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
                 canvasSettings.CurentSelectionArea = new Rect2D(left, top, right - left, bottom - top);
 
                 if (!canvasSettings.IsDragging &&
@@ -198,10 +202,10 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                     if (canvasSettings.IsDrawing)
                     {
                         // Calculate the standard coordinates (handles dragging in any direction)
-                        float left = (float)Math.Min(canvasSettings.CurentSelectionArea.X, canvasSettings.CurrentPoint.X);
-                        float top = (float)Math.Min(canvasSettings.CurentSelectionArea.Y, canvasSettings.CurrentPoint.Y);
-                        float right = (float)Math.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
-                        float bottom = (float)Math.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
+                        float left = (float)MathF.Min(canvasSettings.CurentSelectionArea.X, canvasSettings.CurrentPoint.X);
+                        float top = (float)MathF.Min(canvasSettings.CurentSelectionArea.Y, canvasSettings.CurrentPoint.Y);
+                        float right = (float)MathF.Max(canvasSettings.CurentSelectionArea.Right, canvasSettings.CurrentPoint.X);
+                        float bottom = (float)MathF.Max(canvasSettings.CurentSelectionArea.Bottom, canvasSettings.CurrentPoint.Y);
                         rect = new Rect2D(left, top, right - left, bottom - top);
 
                         if (!canvasSettings.IsDragging &&
@@ -254,8 +258,10 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
         private void ToggleButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             var tb = sender as ToggleButton;
-            documentController.CurrentToolboxTool = (ToolboxTool)tb.Tag;
+            documentController.CurrentToolboxTool = ((ToolboxButtonDefinition)tb.Tag).Tool;
+            documentController.CurrentTargetType = ((ToolboxButtonDefinition)tb.Tag).TargetType;
         }
+
         private void EditDocument_Click(object sender, RoutedEventArgs e)
         {
 
@@ -264,14 +270,11 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
         #region process Selection
         private void ProcessSelection()
         {
-            switch (documentController.CurrentToolboxTool)
+            if (documentController.CurrentTargetType != null)
             {
-                case ToolboxTool.Rectangle:
-                    documentController.CreateRectangle(documentSettings);
-                    break;
+                documentController.CreateSceneNode(documentSettings);
             }
             ClearToolbox();
-
         }
 
         #endregion 
@@ -294,7 +297,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
                 {
                     var button = new Fluent.ToggleButton
                     {
-                        Tag = def.Tool,
+                        Tag = def,
                         GroupName = "ToolboxTools",
                         Padding = new Thickness(0),
                         Margin = new Thickness(0),
@@ -324,10 +327,7 @@ namespace Crolow.Designer.Wpf.App.Views.Document.Canvas
 
         private void SelectionController_IsChanged(object sender, Core.Transforms.TransformContent e)
         {
-            float offsetX = canvasSettings.CanvasArea.X;
-            float offsetY = canvasSettings.CanvasArea.Y;
-
-            // documentSettings.CurrentSelectionArea = canvasSettings.ScaleToPixels(canvasSettings.CurentSelectionArea, canvasSettings.CanvasArea.X, canvasSettings.CanvasArea.Y);
+            documentController.ApplyTransform(e);
         }
 
         private void SelectionController_IsChanging(object sender, Core.Transforms.TransformContent e)

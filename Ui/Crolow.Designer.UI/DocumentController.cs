@@ -1,7 +1,8 @@
 ﻿using Crolow.Designer.Common.Constants;
-using Crolow.Designer.Core.Extensions;
 using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Scene.Nodes;
+using Crolow.Designer.Core.Transforms;
+using Crolow.Designer.Graphics.Core.Extensions;
 using Crolow.Designer.Graphics.Core.UISettings;
 using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Application.Sessions.Selections;
@@ -24,6 +25,7 @@ namespace Crolow.Designer.UI
         public LayerNode? ActiveLayer { get; set; }
         public SceneNode? ActiveNode { get; set; }
         public ToolboxTool CurrentToolboxTool { get; set; }
+        public Type CurrentTargetType { get; set; }
 
         public DocumentController(DocumentSession session)
         {
@@ -62,10 +64,10 @@ namespace Crolow.Designer.UI
             }
         }
 
-        public void CreateRectangle(DesignDocumentSettings settings)
+        public void CreateSceneNode(DesignDocumentSettings settings)
         {
             GroupNode pNode = ActiveNode is GroupNode ? ActiveNode as GroupNode : ActiveLayer;
-            Session.CreateRectangle(pNode, settings.CurrentSelectionArea);
+            Session.CreateSceneNode(pNode, settings.CurrentSelectionArea, CurrentTargetType);
         }
 
         public void GetSelectionArea()
@@ -90,6 +92,14 @@ namespace Crolow.Designer.UI
                         }
                     }
                 }
+            }
+        }
+        public void ApplyTransform(TransformContent transform)
+        {
+            foreach (var node in Selections.Objects.Select(p => p.Value as SceneNode))
+            {
+                var provider = runtime.Providers.GetProvider(node.GetType());
+                provider.ApplyTransform(node, transform, true);
             }
         }
     }

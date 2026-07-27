@@ -3,6 +3,7 @@ using Crolow.Designer.Common.Extensions;
 using Crolow.Designer.Common.Runtime;
 using Crolow.Designer.Core.Extensions;
 using Crolow.Designer.Core.Scene.Nodes;
+using Crolow.Designer.Graphics.Core.Extensions;
 using Crolow.Designer.Runtime.Application;
 using Crolow.Designer.Runtime.Application.Commands;
 using Crolow.Designer.Runtime.Modules.DocumentModule.Commands.Documents.Events;

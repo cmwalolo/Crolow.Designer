@@ -1,5 +1,6 @@
 ﻿using Crolow.Designer.Core.Geometry;
 using Crolow.Designer.Core.Transforms;
+using Crolow.Designer.Graphics.Core.Extensions;
 using Crolow.Designer.Graphics.Core.UISettings;
 using System.Windows;
 using System.Windows.Controls;
@@ -111,11 +112,11 @@ public class SelectionTransformController : Control
         }
     }
     #endregion
+
     #region public
     public Rect2D Selection { get; set; }
 
     #endregion 
-
 
     #region Interaction State
 
@@ -308,7 +309,7 @@ public class SelectionTransformController : Control
 
         float startAngle = (float)Math.Atan2(_rotationStartVector.Y, _rotationStartVector.X);
         float currentAngle = (float)Math.Atan2(currentVector.Y, currentVector.X);
-        float delta = (currentAngle - startAngle) * 180.0f / (float)Math.PI;
+        float delta = (currentAngle - startAngle) * 180.0f / (float)MathF.PI;
 
         Rotation = NormalizeAngle(_dragStartRotation + delta);
         RaiseIsChanging();
@@ -381,7 +382,7 @@ public class SelectionTransformController : Control
             if (horizontalOnly)
             {
                 // largeur pilotée par la distance au centre
-                float targetHalfWidth = Math.Abs((float)currentPoint.X - centerX);
+                float targetHalfWidth = MathF.Abs((float)currentPoint.X - centerX);
                 float targetWidth = targetHalfWidth * 2f;
                 float targetHeight = targetWidth / _dragStartAspectRatio;
                 float targetHalfHeight = targetHeight * 0.5f;
@@ -394,7 +395,7 @@ public class SelectionTransformController : Control
             else if (verticalOnly)
             {
                 // hauteur pilotée par la distance au centre
-                float targetHalfHeight = Math.Abs((float)currentPoint.Y - centerY);
+                float targetHalfHeight = MathF.Abs((float)currentPoint.Y - centerY);
                 float targetHeight = targetHalfHeight * 2f;
                 float targetWidth = targetHeight * _dragStartAspectRatio;
                 float targetHalfWidth = targetWidth * 0.5f;
@@ -409,8 +410,8 @@ public class SelectionTransformController : Control
                 float width = right - left;
                 float height = bottom - top;
 
-                float absWidth = Math.Abs(width);
-                float absHeight = Math.Abs(height);
+                float absWidth = MathF.Abs(width);
+                float absHeight = MathF.Abs(height);
 
                 // On choisit la dimension dominante du drag
                 float widthFromHeight = absHeight * _dragStartAspectRatio;
@@ -556,7 +557,7 @@ public class SelectionTransformController : Control
         var selection = GetSelectionRect();
         var center = GetSelectionCenter(selection);
 
-        if (Math.Abs(Rotation) < 0.0001f)
+        if (MathF.Abs(Rotation) < 0.0001f)
             return p;
 
         var matrix = new Matrix();
@@ -579,8 +580,7 @@ public class SelectionTransformController : Control
     {
         changingEventArgs.Selection = Selection;
         changingEventArgs.Rotation = Rotation;
-        ApplyModifications(changingEventArgs);
-        IsChanging?.Invoke(this, changingEventArgs);
+        IsChanging?.Invoke(this, ApplyModifications(changingEventArgs));
         InvalidateVisual();
     }
 
@@ -588,13 +588,19 @@ public class SelectionTransformController : Control
     {
         changingEventArgs.Selection = Selection;
         changingEventArgs.Rotation = Rotation;
-        ApplyModifications(changingEventArgs);
-        IsChanging?.Invoke(this, changingEventArgs);
+        IsChanged?.Invoke(this, ApplyModifications(changingEventArgs));
         InvalidateVisual();
     }
 
-    private void ApplyModifications(TransformContent changingEventArgs)
+    private TransformContent ApplyModifications(TransformContent args)
     {
+        float offsetX = CanvasSettings.CanvasArea.X;
+        float offsetY = CanvasSettings.CanvasArea.Y;
+
+        TransformContent changingEventArgs = new TransformContent();
+        changingEventArgs.InitSelection = CanvasSettings.ScaleToPixels(args.InitSelection, offsetX, offsetY);
+        changingEventArgs.Selection = CanvasSettings.ScaleToPixels(args.Selection, offsetX, offsetY);
+
         var initSelection = changingEventArgs.InitSelection;
         var selection = changingEventArgs.Selection;
 
@@ -612,9 +618,12 @@ public class SelectionTransformController : Control
 
         changingEventArgs.Offset = new Point2D(posX - initPosX, posY - initPosY);
         changingEventArgs.Scale = new Point2D(scaleX, scaleY);
+        changingEventArgs.Rotation = args.Rotation;
+        return changingEventArgs;
     }
 
     #endregion
+
     #region Internal Enums
 
     private enum HandleKind
